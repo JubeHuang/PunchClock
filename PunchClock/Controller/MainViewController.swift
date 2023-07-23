@@ -8,35 +8,20 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var label: UILabel!
+    
+    @IBOutlet weak var iconBgLayer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        iconBgLayer.layer.shadowColor = UIColor(red: 0.631, green: 0.678, blue: 0.722, alpha: 0.3).cgColor
+        iconBgLayer.layer.shadowOpacity = 1
+        iconBgLayer.layer.shadowRadius = 10
+        iconBgLayer.layer.shadowOffset = CGSize(width: 0, height: 2)
         
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func signIn(_ sender: Any) {
-        LogInManager().appleSignIn()
-    }
-    
-    @IBAction func addData(_ sender: Any) {
-        FirestoreManager().createData(month: Month.Jul.value, in: Date())
-    }
-    
-    @IBAction func readData(_ sender: Any) {
-        
-        FirestoreManager().fetchData(month: Month.Jul.value) { timeRecords in
-            
-            timeRecords.forEach { record in
-                
-                self.label.text = (record.inTime?.toString() ?? "") + (record.outTime?.toTimeString() ?? "")
-                
-            }
-        }
-    }
     /*
      // MARK: - Navigation
      

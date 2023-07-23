@@ -7,10 +7,14 @@
 
 import Foundation
 import Combine
+import UIKit
 
 struct PunchClockViewModel {
     
     var cancellable: AnyCancellable?
+    
+    var isCheckIn: Bool = false
+    var isCheckOut: Bool = false
     
     var punchInTimeStr: String?
     var punchOutTimeStr: String?
@@ -18,7 +22,18 @@ struct PunchClockViewModel {
     var workingHour: Double = 9
     var workingHourStr: String { "努力工作 \(workingHour) 小時" }
     
-    var todayStr: String { Date().toDateString() }
+    var dateStr: String { Date().toString(dateFormat: DateFormat.yearMonthDate.rawValue) }
+    var weekDayStr: String { Date().toString(dateFormat: DateFormat.weekday.rawValue) }
+    var nowStr: String { Date().toString(dateFormat: DateFormat.hourMinute.rawValue) }
+    
+    var weatherIcon: UIImage = {
+        
+       return UIImage(named: "noData")!
+    }()
+    
+    init() {
+        
+    }
 }
 
 extension PunchClockViewModel {

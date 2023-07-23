@@ -34,7 +34,7 @@ class ShapeBg: UIView {
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = shapePath.cgPath
-        shapeLayer.fillColor = UIColor.blue.cgColor
+        shapeLayer.fillColor = UIColor(named: "White80")?.cgColor
         
         layer.addSublayer(shapeLayer)
     }

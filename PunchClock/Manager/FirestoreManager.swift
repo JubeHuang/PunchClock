@@ -52,25 +52,6 @@ class FirestoreManager {
         }
     }
     
-//    func createSingleTimeData(month: String, time: Date, isPunchIn: Bool) {
-//        guard let path = getPath(month: month) else { return }
-//        
-//        var record: TimeRecord = TimeRecord()
-//        
-//        if isPunchIn {
-//            record = TimeRecord(in: time)
-//        } else {
-//            record = TimeRecord(out: time)
-//        }
-//        
-//        db.collection(path).addDocument(data: record.data) { [weak self] error in
-//            guard let self else { return }
-//            self.errorLog(error,
-//                          errorTitle: "Adding Data Error",
-//                          successTitle: "Data Added")
-//        }
-//    }
-    
     func deleteData(month: String, at index: Int, in: Date?, out: Date?) {
         getDocumentID(month: month, at: index) { [weak self] path, documentID in
             guard let self else { return }
@@ -91,9 +72,29 @@ class FirestoreManager {
                     self.errorLog(error,
                                   errorTitle: "Update Time Error",
                                   successTitle: "Time Updated",
-                                  successMsg: "in: \(record.inTime?.toString() ?? "No Update"), out: \(record.outTime?.toString() ?? "No Update")")
+                                  successMsg: "in: \(record.inTimeString), out: \(record.outTimeString)")
                 }
         }
+    }
+    
+    func getQuote(completion: @escaping (String) -> Void) {
+        let randomInt = Int.random(in: 0...11)
+        
+        db.collection("quote")
+            .document("\(randomInt)")
+            .getDocument { [weak self] snapshots, error in
+                
+                guard let snapshots,
+                      snapshots.exists,
+                      let quote = try? snapshots.data(as: Quote.self).quote else {
+                    self?.errorLog(error, errorTitle: "Read Quote Error", successTitle: "Quote Read")
+                    
+                    completion("今天的語錄尚未抵達，不要著急，因為明天可能也到不了。")
+                    return
+                }
+                
+                completion(quote)
+            }
     }
     
     private func getPath(month: String) -> String? {

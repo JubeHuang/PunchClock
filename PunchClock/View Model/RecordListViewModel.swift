@@ -13,7 +13,7 @@ class RecordListViewModel {
     
     var records: [TimeRecord]
     
-    var monthString = Date().toMonthString()
+    var monthString = Date().toString(dateFormat: DateFormat.month.rawValue)
     
     init() {
 //        self.recordsViewModel = [TimeRecord]()
