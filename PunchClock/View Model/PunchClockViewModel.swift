@@ -9,7 +9,9 @@ import Foundation
 import Combine
 import UIKit
 
-struct PunchClockViewModel {
+class PunchClockViewModel {
+    
+    private let storeManager = FirestoreManager()
     
     var cancellable: AnyCancellable?
     
@@ -19,12 +21,14 @@ struct PunchClockViewModel {
     var punchInTimeStr: String?
     var punchOutTimeStr: String?
     
-    var workingHour: Double = 9
-    var workingHourStr: String { "努力工作 \(workingHour) 小時" }
+    @Published var workingHour: Double = 9
+    @Published var workingHourStr: String?
     
-    var dateStr: String { Date().toString(dateFormat: DateFormat.yearMonthDate.rawValue) }
-    var weekDayStr: String { Date().toString(dateFormat: DateFormat.weekday.rawValue) }
-    var nowStr: String { Date().toString(dateFormat: DateFormat.hourMinute.rawValue) }
+    @Published var dateStr: String = { Date().toString(dateFormat: DateFormat.yearMonthDate.rawValue) }()
+    @Published var weekDayStr: String = { Date().toString(dateFormat: DateFormat.weekday.rawValue) }()
+    @Published var nowStr: String = { Date().toString(dateFormat: DateFormat.hourMinute.rawValue) }()
+    
+    @Published var quoteSubject: String = "今天的語錄尚未抵達，不要著急，因為明天可能也到不了。"
     
     var weatherIcon: UIImage = {
         
@@ -32,19 +36,27 @@ struct PunchClockViewModel {
     }()
     
     init() {
-        
+        $workingHour
+            .map { "努力工作 \($0) 小時" }
+            .assign(to: &$workingHourStr)
     }
 }
 
 extension PunchClockViewModel {
     
-    mutating func getTime(completeHandler: @escaping (Publishers.Autoconnect<Timer.TimerPublisher>.Output) -> Void) {
+    func getTime(completeHandler: @escaping (Publishers.Autoconnect<Timer.TimerPublisher>.Output) -> Void) {
         self.cancellable = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink(receiveValue: { value in
             completeHandler(value)
         })
     }
     
-    mutating func cancelTimer() {
+    func cancelTimer() {
         self.cancellable?.cancel()
+    }
+    
+    func loadQuote() {
+        storeManager.getQuote { [weak self] quote in
+            self?.quoteSubject = quote
+        }
     }
 }

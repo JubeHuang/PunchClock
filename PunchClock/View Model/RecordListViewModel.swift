@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import Combine
 
-class RecordListViewModel {
+class RecordListViewModel: RecordsType {
+    
+    func searchRecords(in month: String) -> AnyPublisher<[TimeRecord], Never> {
+    }
+    
+    func recordDetail(with id: String, in month: String) -> AnyPublisher<TimeRecord, Never> {
+        <#code#>
+    }
+    
     
 //    var recordsViewModel: [TimeRecord]
     

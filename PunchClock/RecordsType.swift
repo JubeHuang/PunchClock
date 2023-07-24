@@ -8,5 +8,7 @@ import Combine
 
 protocol RecordsType {
     
-    func searchRecords(month: String) -> AnyPublisher<[TimeRecord], Never>
+    func searchRecords(in month: String) -> AnyPublisher<[TimeRecord], Never>
+    
+    func recordDetail(with id: String, in month: String) -> AnyPublisher<TimeRecord, Never>
 }
