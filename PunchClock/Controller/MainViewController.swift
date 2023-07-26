@@ -10,26 +10,31 @@ import Combine
 
 class MainViewController: UIViewController {
     
+    @IBOutlet weak var workingHourLabel: UILabel!
     @IBOutlet weak var weekdayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var quoteTextField: UITextView!
     @IBOutlet weak var iconBgLayer: UIView!
     
-    var viewModel: PunchClockViewModel!
+    var viewModel = PunchClockViewModel()
     var cancellable = Set<AnyCancellable>()
+    var checkInButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "checkIn"), for: .selected)
+        return btn
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        render()
-        
         bind()
+        renderUI()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        
+        viewModel.timerSubscriber?.cancel()
     }
     
     func bind() {
@@ -45,14 +50,54 @@ class MainViewController: UIViewController {
             .assign(to: \.text!, on: weekdayLabel)
             .store(in: &cancellable)
         
+        viewModel.$workingHourStr
+            .assign(to: \.text, on: workingHourLabel)
+            .store(in: &cancellable)
+        
+        
+        
         
     }
     
-    private func render() {
-        iconBgLayer.layer.shadowColor = UIColor(red: 0.631, green: 0.678, blue: 0.722, alpha: 0.3).cgColor
+    private func renderUI() {
+        iconBgLayer.layer.shadowColor = UIColor.shadowColor.cgColor
         iconBgLayer.layer.shadowOpacity = 1
         iconBgLayer.layer.shadowRadius = 10
         iconBgLayer.layer.shadowOffset = CGSize(width: 0, height: 2)
+        
+        createCheckInButton()
+    }
+    
+    private func createCheckInButton() {
+        viewModel.$currentTimeStr
+            .sink(receiveValue: { title in
+                let attributedText = NSMutableAttributedString(string: title, attributes: [
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 70, weight: .medium),
+                    NSAttributedString.Key.foregroundColor: UIColor.darkBlue ?? .black
+                ])
+                
+                self.checkInButton.setAttributedTitle(attributedText, for: .normal)
+            })
+            .store(in: &cancellable)
+        
+        view.addSubview(checkInButton)
+        checkInButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            checkInButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            checkInButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+        ])
+        
+        checkInButton.setImage(UIImage(named: "checkOut"), for: .normal)
+        checkInButton.setImage(UIImage(named: "checkIn"), for: .selected)
+        checkInButton.addTarget(self, action: #selector(checkIn), for: .touchUpInside)
+        
+        checkInButton.layoutButtonImage(at: .Left, spacing: 10)
+    }
+    
+    @objc private func checkIn() {
+        viewModel.timerSubscriber?.cancel()
+        
+        checkInButton.isSelected = !checkInButton.isSelected
     }
     
     /*

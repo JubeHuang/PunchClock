@@ -23,6 +23,9 @@
 		8D2F704E2A677F1100348082 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704D2A677F1100348082 /* LocationService.swift */; };
 		8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704F2A6798E200348082 /* UIView+Extension.swift */; };
 		8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */; };
+		8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997482A6F67F400124000 /* SettingTableViewController.swift */; };
+		8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39974E2A70F93A00124000 /* UIButton+Extension.swift */; };
+		8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997502A71284A00124000 /* UIColor+extension.swift */; };
 		8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3BA63D2A6D785A0040CF4E /* Quote.swift */; };
 		8D3BA6412A6D7AC20040CF4E /* RecordsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */; };
 		8D5C0B7C2A5D3A6400AC89B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */; };
@@ -49,6 +52,9 @@
 		8D2F704D2A677F1100348082 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8D2F704F2A6798E200348082 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeBg.swift; sourceTree = "<group>"; };
+		8D3997482A6F67F400124000 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		8D39974E2A70F93A00124000 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		8D3997502A71284A00124000 /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 		8D3BA63D2A6D785A0040CF4E /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Quote.swift; path = PunchClock/Model/Quote.swift; sourceTree = SOURCE_ROOT; };
 		8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsType.swift; sourceTree = "<group>"; };
 		8D5C0B782A5D3A6400AC89B5 /* PunchClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +95,9 @@
 		8D2EAAFF2A5E94D000684127 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8D39974E2A70F93A00124000 /* UIButton+Extension.swift */,
 				8D2F704F2A6798E200348082 /* UIView+Extension.swift */,
+				8D3997502A71284A00124000 /* UIColor+extension.swift */,
 				8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */,
 				8D2EAAF42A5D612800684127 /* String+Extension.swift */,
 			);
@@ -120,6 +128,7 @@
 		8D3BA63F2A6D7A430040CF4E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8D3997482A6F67F400124000 /* SettingTableViewController.swift */,
 				8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */,
 				8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */,
 			);
@@ -246,6 +255,7 @@
 				8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */,
 				8D2EAB0B2A6005C900684127 /* RecordListViewController.swift in Sources */,
 				8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */,
+				8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */,
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,
 				8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */,
 				8D2EAB022A5FD63200684127 /* RecordViewModel.swift in Sources */,
@@ -261,7 +271,9 @@
 				8D5C0B7E2A5D3A6400AC89B5 /* SceneDelegate.swift in Sources */,
 				8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */,
 				8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */,
+				8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */,
 				8D2EAAFD2A5E92D900684127 /* Date+Extension.swift in Sources */,
+				8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

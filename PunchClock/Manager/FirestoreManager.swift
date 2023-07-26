@@ -52,7 +52,7 @@ class FirestoreManager {
         }
     }
     
-    func deleteData(month: String, at index: Int, in: Date?, out: Date?) {
+    func deleteData(month: String, at index: Int) {
         getDocumentID(month: month, at: index) { [weak self] path, documentID in
             guard let self else { return }
             
@@ -60,7 +60,7 @@ class FirestoreManager {
         }
     }
     
-    func updateData(month: String, index: Int, in: Date?, out: Date?) {
+    func updateData(month: String, index: Int, in: Date? = nil, out: Date? = nil) {
         let record = TimeRecord(in: `in`, out: out)
         
         getDocumentID(month: month, at: index) { [weak self] path, documentID in

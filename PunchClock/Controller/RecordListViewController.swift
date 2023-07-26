@@ -9,7 +9,7 @@ import UIKit
 
 class RecordListViewController: UIViewController {
     
-    var viewModel = RecordListViewModel()
+//    var viewModel = RecordListViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()

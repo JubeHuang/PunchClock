@@ -9,9 +9,9 @@ import Foundation.NSData
 
 extension Date {
     
-    func toString(dateFormat: String) -> String {
+    func toString(dateFormat: DateFormat) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
+        dateFormatter.dateFormat = dateFormat.rawValue
         
         return dateFormatter.string(from: self)
     }

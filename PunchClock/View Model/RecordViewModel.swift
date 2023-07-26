@@ -13,10 +13,10 @@ struct RecordViewModel {
 extension RecordViewModel {
     
     var inTime: String? {
-        self.record.inTime?.toString(dateFormat: DateFormat.hourMinute.rawValue)
+        self.record.inTime?.toString(dateFormat: .hourMinute)
     }
     
     var outTime: String? {
-        self.record.outTime?.toString(dateFormat: DateFormat.hourMinute.rawValue)
+        self.record.outTime?.toString(dateFormat: .hourMinute)
     }
 }
