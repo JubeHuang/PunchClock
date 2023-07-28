@@ -10,6 +10,7 @@ import Combine
 
 class MainViewController: UIViewController {
     
+    @IBOutlet weak var workingHourStack: UIStackView!
     @IBOutlet weak var workingHourLabel: UILabel!
     @IBOutlet weak var weekdayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -18,11 +19,8 @@ class MainViewController: UIViewController {
     
     var viewModel = PunchClockViewModel()
     var cancellable = Set<AnyCancellable>()
-    var checkInButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setImage(UIImage(named: "checkIn"), for: .selected)
-        return btn
-    }()
+    
+    let vibrateFeedback = UIImpactFeedbackGenerator(style: .medium)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +52,21 @@ class MainViewController: UIViewController {
             .assign(to: \.text, on: workingHourLabel)
             .store(in: &cancellable)
         
-        
-        
+        viewModel.$isCheckIn.sink { [weak self] isCheckIn in
+            guard let self = self else { return }
+            
+            self.workingHourStack.isHidden = !isCheckIn
+            self.viewModel.checkOutButton.isHidden = !isCheckIn
+            self.viewModel.captionLabel.isHidden = isCheckIn
+            
+            let animator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0.15, options: .curveEaseInOut) {
+                self.workingHourStack.layer.opacity = isCheckIn ? 1 : 0
+            }
+            animator.addAnimations({
+                self.viewModel.checkOutButton.layer.opacity = isCheckIn ? 1 : 0
+            }, delayFactor: 0.3)
+            
+        }.store(in: &cancellable)
         
     }
     
@@ -65,39 +76,43 @@ class MainViewController: UIViewController {
         iconBgLayer.layer.shadowRadius = 10
         iconBgLayer.layer.shadowOffset = CGSize(width: 0, height: 2)
         
-        createCheckInButton()
-    }
-    
-    private func createCheckInButton() {
-        viewModel.$currentTimeStr
-            .sink(receiveValue: { title in
-                let attributedText = NSMutableAttributedString(string: title, attributes: [
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 70, weight: .medium),
-                    NSAttributedString.Key.foregroundColor: UIColor.darkBlue ?? .black
-                ])
-                
-                self.checkInButton.setAttributedTitle(attributedText, for: .normal)
-            })
-            .store(in: &cancellable)
+        viewModel.createCheckInButton(controller: self, action: #selector(checkIn))
+        viewModel.createCheckOutButton(controller: self, action: #selector(checkOut))
         
-        view.addSubview(checkInButton)
-        checkInButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(viewModel.captionLabel)
+        
+        viewModel.captionLabel.translatesAutoresizingMaskIntoConstraints = false
+        workingHourStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkInButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            checkInButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            viewModel.captionLabel.topAnchor.constraint(equalTo: viewModel.checkInButton.bottomAnchor),
+            viewModel.captionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 96)
         ])
-        
-        checkInButton.setImage(UIImage(named: "checkOut"), for: .normal)
-        checkInButton.setImage(UIImage(named: "checkIn"), for: .selected)
-        checkInButton.addTarget(self, action: #selector(checkIn), for: .touchUpInside)
-        
-        checkInButton.layoutButtonImage(at: .Left, spacing: 10)
     }
     
-    @objc private func checkIn() {
-        viewModel.timerSubscriber?.cancel()
+    @objc private func checkIn(_ sender: UIButton) {
+        viewModel.checkInButton.isSelected = true
+        viewModel.checkInButton.isUserInteractionEnabled = false
         
-        checkInButton.isSelected = !checkInButton.isSelected
+        viewModel.punchInTimeStr = Date().toString(dateFormat: .hourMinute)
+        viewModel.checkInButton.setTitle(string: viewModel.punchInTimeStr!, button: .work(state: .punchIn))
+        
+        vibrateFeedback.prepare()
+        vibrateFeedback.impactOccurred(intensity: 3)
+        
+        viewModel.isCheckIn = true
+    }
+    
+    @objc private func checkOut(_ sender: UIButton) {
+        viewModel.checkOutButton.isSelected = true
+        viewModel.checkOutButton.isUserInteractionEnabled = false
+        
+        viewModel.punchOutTimeStr = Date().toString(dateFormat: .hourMinute)
+        viewModel.checkOutButton.setTitle(string: viewModel.punchOutTimeStr!, button: .offWork(state: .punchOut))
+        
+        vibrateFeedback.prepare()
+        vibrateFeedback.impactOccurred(intensity: 3)
+        
+        viewModel.isCheckOut = false
     }
     
     /*

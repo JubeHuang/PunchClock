@@ -14,9 +14,10 @@ class PunchClockViewModel {
     private let storeManager = FirestoreManager()
     
     var timerSubscriber: AnyCancellable?
+    var cancellable = Set<AnyCancellable>()
     
-    var isCheckIn: Bool = false
-    var isCheckOut: Bool = false
+    @Published var isCheckIn: Bool = false
+    @Published var isCheckOut: Bool = false
     
     var punchInTimeStr: String?
     var punchOutTimeStr: String?
@@ -30,9 +31,26 @@ class PunchClockViewModel {
     
     @Published var quoteSubject: String = "今天的語錄尚未抵達，不要著急，因為明天可能也到不了。"
     
+    var captionLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 100, y: 100, width: 240, height: 30))
+        label.text = "雙擊打卡開啟今天的工作"
+        label.textColor = .black70
+        return label
+    }()
+    
     var weatherIcon: UIImage = {
-        
-       return UIImage(named: "04")!
+        return UIImage(named: "04")!
+    }()
+    
+    var checkInButton: TimeButton = {
+        let btn = TimeButton(frame: CGRect(x: 30, y: 0, width: 300, height: 100))
+        btn.setImage(button: .work(state: .notPunchIn))
+        return btn
+    }()
+    lazy var checkOutButton: TimeButton = {
+        let btn = TimeButton(frame: CGRect(x: 30, y: 200, width: 300, height: 100))
+        btn.setImage(button: .offWork(state: .notPunchOut))
+        return btn
     }()
     
     init() {
@@ -65,5 +83,38 @@ extension PunchClockViewModel {
         storeManager.getQuote { [weak self] quote in
             self?.quoteSubject = quote
         }
+    }
+}
+
+extension PunchClockViewModel {
+    
+    func createCheckInButton(controller: MainViewController, action: Selector) {
+        $currentTimeStr
+            .sink(receiveValue: { title in
+                self.checkInButton.setTitle(string: title, button: .work(state: .notPunchIn))
+            })
+            .store(in: &cancellable)
+        
+        checkInButton.addTarget(controller, action: action, for: .touchDownRepeat)
+        
+        checkInButton.layoutButtonImage(at: .Left, spacing: 10)
+        
+        checkInButton.commonLayout(on: controller.view)
+        checkInButton.topAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.topAnchor).isActive = true
+    }
+    
+    func createCheckOutButton(controller: MainViewController, action: Selector) {
+        $currentTimeStr
+            .sink(receiveValue: { title in
+                self.checkOutButton.setTitle(string: title, button: .offWork(state: .notPunchOut))
+            })
+            .store(in: &cancellable)
+        
+        checkOutButton.addTarget(controller, action: action, for: .touchDownRepeat)
+        
+        checkOutButton.layoutButtonImage(at: .Left, spacing: 10)
+        
+        checkOutButton.commonLayout(on: controller.view)
+        checkOutButton.topAnchor.constraint(equalTo: checkInButton.bottomAnchor, constant: 158).isActive = true
     }
 }

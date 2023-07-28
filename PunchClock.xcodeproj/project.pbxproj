@@ -15,7 +15,6 @@
 		8D2EAAF92A5D67B100684127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF82A5D67B100684127 /* GoogleService-Info.plist */; };
 		8D2EAAFB2A5E7F1600684127 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAFA2A5E7F1600684127 /* Month.swift */; };
 		8D2EAAFD2A5E92D900684127 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */; };
-		8D2EAB022A5FD63200684127 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB012A5FD63200684127 /* RecordViewModel.swift */; };
 		8D2EAB052A5FD7B400684127 /* RecordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */; };
 		8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */; };
 		8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB082A60016900684127 /* SettingViewModel.swift */; };
@@ -23,6 +22,7 @@
 		8D2F704E2A677F1100348082 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704D2A677F1100348082 /* LocationService.swift */; };
 		8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704F2A6798E200348082 /* UIView+Extension.swift */; };
 		8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */; };
+		8D36D9CA2A725FEE00502697 /* timeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D36D9C92A725FEE00502697 /* timeButton.swift */; };
 		8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997482A6F67F400124000 /* SettingTableViewController.swift */; };
 		8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39974E2A70F93A00124000 /* UIButton+Extension.swift */; };
 		8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997502A71284A00124000 /* UIColor+extension.swift */; };
@@ -44,7 +44,6 @@
 		8D2EAAF82A5D67B100684127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D2EAAFA2A5E7F1600684127 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		8D2EAB012A5FD63200684127 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordListViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchClockViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB082A60016900684127 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		8D2F704D2A677F1100348082 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8D2F704F2A6798E200348082 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeBg.swift; sourceTree = "<group>"; };
+		8D36D9C92A725FEE00502697 /* timeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeButton.swift; sourceTree = "<group>"; };
 		8D3997482A6F67F400124000 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		8D39974E2A70F93A00124000 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		8D3997502A71284A00124000 /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
@@ -119,10 +119,18 @@
 			children = (
 				8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */,
 				8D2EAB082A60016900684127 /* SettingViewModel.swift */,
-				8D2EAB012A5FD63200684127 /* RecordViewModel.swift */,
 				8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		8D36D9C82A725FBD00502697 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D36D9C92A725FEE00502697 /* timeButton.swift */,
+				8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		8D3BA63F2A6D7A430040CF4E /* Controller */ = {
@@ -157,8 +165,8 @@
 				8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */,
 				8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */,
 				8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */,
-				8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */,
 				8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */,
+				8D36D9C82A725FBD00502697 /* View */,
 				8D3BA63F2A6D7A430040CF4E /* Controller */,
 				8D2EAB032A5FD63A00684127 /* View Model */,
 				8D2EAB002A5E94E300684127 /* Model */,
@@ -258,7 +266,6 @@
 				8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */,
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,
 				8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */,
-				8D2EAB022A5FD63200684127 /* RecordViewModel.swift in Sources */,
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
@@ -272,6 +279,7 @@
 				8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */,
 				8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */,
 				8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */,
+				8D36D9CA2A725FEE00502697 /* timeButton.swift in Sources */,
 				8D2EAAFD2A5E92D900684127 /* Date+Extension.swift in Sources */,
 				8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */,
 			);
