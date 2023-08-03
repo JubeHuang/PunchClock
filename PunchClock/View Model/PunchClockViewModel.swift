@@ -19,8 +19,19 @@ class PunchClockViewModel {
     @Published var isCheckIn: Bool = false
     @Published var isCheckOut: Bool = false
     
-    var punchInTimeStr: String?
-    var punchOutTimeStr: String?
+    lazy var punchInTimeStr: String? = nil {
+        didSet { punchInTime = Date() }
+    }
+    lazy var punchOutTimeStr: String? = nil {
+        didSet {
+            punchOutTime = Date()
+            
+            guard let month = punchInTime?.toString(dateFormat: .month) else { return }
+            storeManager.createData(month: month, in: punchInTime, out: punchOutTime)
+        }
+    }
+    lazy var punchInTime: Date? = nil
+    lazy var punchOutTime: Date? = nil
     
     @Published var workingHour: Double = 9
     @Published var workingHourStr: String?
@@ -64,6 +75,10 @@ class PunchClockViewModel {
         getTime()
         loadQuote()
     }
+    
+    deinit {
+        timerSubscriber?.cancel()
+    }
 }
 
 extension PunchClockViewModel {
@@ -75,7 +90,7 @@ extension PunchClockViewModel {
         })
     }
     
-    func cancelTimer() {
+    private func cancelTimer() {
         self.timerSubscriber?.cancel()
     }
     
@@ -116,5 +131,19 @@ extension PunchClockViewModel {
         
         checkOutButton.commonLayout(on: controller.view)
         checkOutButton.topAnchor.constraint(equalTo: checkInButton.bottomAnchor, constant: 158).isActive = true
+    }
+    
+    func vibrate(intensity: Int = 3) {
+        let vibrateFeedback = UIImpactFeedbackGenerator(style: .medium)
+        vibrateFeedback.prepare()
+        vibrateFeedback.impactOccurred(intensity: 3)
+    }
+    
+    func displayAlert(title: String? = nil, message: String? = nil, actionTitle: String = "YAY", viewController: UIViewController) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: actionTitle, style: .default)
+        alertController.addAction(okAction)
+        
+        viewController.present(alertController, animated: true)
     }
 }

@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -111,10 +111,10 @@
                                 </constraints>
                             </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beu-4x-g27">
-                                <rect key="frame" x="0.0" y="492" width="393" height="277"/>
+                                <rect key="frame" x="0.0" y="492" width="393" height="360"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wym-bA-hFu" userLabel="content">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="277"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="360"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="F1j-PX-tAm">
                                                 <rect key="frame" x="40" y="52" width="313" height="62"/>
@@ -217,38 +217,24 @@
                                             <constraint firstAttribute="trailing" secondItem="hRG-ho-J8a" secondAttribute="trailing" constant="20" id="19x-Ti-NVI"/>
                                             <constraint firstItem="F1j-PX-tAm" firstAttribute="top" secondItem="wym-bA-hFu" secondAttribute="top" constant="52" id="ESb-Zd-gG6"/>
                                             <constraint firstItem="hRG-ho-J8a" firstAttribute="top" secondItem="F1j-PX-tAm" secondAttribute="bottom" constant="32" id="FM6-ob-rop"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hRG-ho-J8a" secondAttribute="bottom" constant="20" id="HVy-ur-K5t"/>
                                             <constraint firstAttribute="trailing" secondItem="F1j-PX-tAm" secondAttribute="trailing" constant="40" id="Ru4-Ql-aq4"/>
                                             <constraint firstItem="F1j-PX-tAm" firstAttribute="leading" secondItem="wym-bA-hFu" secondAttribute="leading" constant="40" id="S1n-fN-pBH"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hRG-ho-J8a" secondAttribute="bottom" id="URD-oB-HAm"/>
                                             <constraint firstItem="hRG-ho-J8a" firstAttribute="leading" secondItem="wym-bA-hFu" secondAttribute="leading" constant="20" id="bAb-cg-f4i"/>
-                                            <constraint firstAttribute="bottom" secondItem="hRG-ho-J8a" secondAttribute="bottom" constant="32" id="pOH-G8-6de"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="pOH-G8-6de"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="wym-bA-hFu" firstAttribute="centerX" secondItem="beu-4x-g27" secondAttribute="centerX" id="2da-Ji-K7T"/>
+                                    <constraint firstItem="ox8-Br-QIR" firstAttribute="bottom" secondItem="wym-bA-hFu" secondAttribute="bottom" id="D8t-Cz-Qry"/>
                                     <constraint firstItem="wym-bA-hFu" firstAttribute="bottom" secondItem="oZ7-uP-T8W" secondAttribute="bottom" id="FOR-Do-Xm3"/>
                                     <constraint firstItem="wym-bA-hFu" firstAttribute="top" secondItem="oZ7-uP-T8W" secondAttribute="top" id="TZo-hy-Kn7"/>
-                                    <constraint firstItem="wym-bA-hFu" firstAttribute="height" secondItem="ox8-Br-QIR" secondAttribute="height" id="Vwo-Pa-FjS"/>
-                                    <constraint firstItem="wym-bA-hFu" firstAttribute="width" secondItem="ox8-Br-QIR" secondAttribute="width" id="gP3-yl-60c"/>
                                     <constraint firstItem="wym-bA-hFu" firstAttribute="trailing" secondItem="oZ7-uP-T8W" secondAttribute="trailing" id="hOS-8w-vCo"/>
                                     <constraint firstItem="wym-bA-hFu" firstAttribute="leading" secondItem="oZ7-uP-T8W" secondAttribute="leading" id="hgA-fD-D4V"/>
-                                    <constraint firstItem="wym-bA-hFu" firstAttribute="bottom" secondItem="ox8-Br-QIR" secondAttribute="bottom" id="ly7-z9-tK8"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="oZ7-uP-T8W"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="ox8-Br-QIR"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="gP3-yl-60c"/>
-                                        <exclude reference="ly7-z9-tK8"/>
-                                    </mask>
-                                </variation>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -268,7 +254,7 @@
                             <constraint firstItem="beu-4x-g27" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ejd-wC-MDs"/>
                             <constraint firstItem="beu-4x-g27" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="492" id="jQF-W8-JHR"/>
                             <constraint firstItem="sT6-Dc-gsD" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="320" id="jym-VU-bzP"/>
-                            <constraint firstItem="beu-4x-g27" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="q7O-p4-ES0"/>
+                            <constraint firstItem="beu-4x-g27" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="q7O-p4-ES0"/>
                             <constraint firstAttribute="trailing" secondItem="b0j-ak-Sg0" secondAttribute="trailing" id="uyq-jn-oAq"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

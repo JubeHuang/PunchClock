@@ -20,8 +20,6 @@ class MainViewController: UIViewController {
     var viewModel = PunchClockViewModel()
     var cancellable = Set<AnyCancellable>()
     
-    let vibrateFeedback = UIImpactFeedbackGenerator(style: .medium)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +30,6 @@ class MainViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        viewModel.timerSubscriber?.cancel()
     }
     
     func bind() {
@@ -68,6 +65,15 @@ class MainViewController: UIViewController {
             
         }.store(in: &cancellable)
         
+//        viewModel.$isCheckOut.sink { [weak self] isCheckOut in
+//            guard let self = self else { return }
+//
+//            if isCheckOut {
+//                viewModel.displayAlert(viewController: self)
+//            }
+//
+//        }.store(in: &cancellable)
+        
     }
     
     private func renderUI() {
@@ -96,8 +102,7 @@ class MainViewController: UIViewController {
         viewModel.punchInTimeStr = Date().toString(dateFormat: .hourMinute)
         viewModel.checkInButton.setTitle(string: viewModel.punchInTimeStr!, button: .work(state: .punchIn))
         
-        vibrateFeedback.prepare()
-        vibrateFeedback.impactOccurred(intensity: 3)
+        viewModel.vibrate()
         
         viewModel.isCheckIn = true
     }
@@ -109,10 +114,11 @@ class MainViewController: UIViewController {
         viewModel.punchOutTimeStr = Date().toString(dateFormat: .hourMinute)
         viewModel.checkOutButton.setTitle(string: viewModel.punchOutTimeStr!, button: .offWork(state: .punchOut))
         
-        vibrateFeedback.prepare()
-        vibrateFeedback.impactOccurred(intensity: 3)
+        viewModel.vibrate()
         
-        viewModel.isCheckOut = false
+        viewModel.isCheckOut = true
+        
+        viewModel.displayAlert(title: "恭喜打卡完成", message: "趕快飛奔下班吧～", viewController: self)
     }
     
     /*
