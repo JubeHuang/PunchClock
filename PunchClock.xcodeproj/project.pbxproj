@@ -15,13 +15,19 @@
 		8D2EAAF92A5D67B100684127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF82A5D67B100684127 /* GoogleService-Info.plist */; };
 		8D2EAAFB2A5E7F1600684127 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAFA2A5E7F1600684127 /* Month.swift */; };
 		8D2EAAFD2A5E92D900684127 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */; };
-		8D2EAB022A5FD63200684127 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB012A5FD63200684127 /* RecordViewModel.swift */; };
 		8D2EAB052A5FD7B400684127 /* RecordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */; };
 		8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */; };
 		8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB082A60016900684127 /* SettingViewModel.swift */; };
 		8D2EAB0B2A6005C900684127 /* RecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */; };
 		8D2F704E2A677F1100348082 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704D2A677F1100348082 /* LocationService.swift */; };
 		8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2F704F2A6798E200348082 /* UIView+Extension.swift */; };
+		8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */; };
+		8D36D9CA2A725FEE00502697 /* timeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D36D9C92A725FEE00502697 /* timeButton.swift */; };
+		8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997482A6F67F400124000 /* SettingTableViewController.swift */; };
+		8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39974E2A70F93A00124000 /* UIButton+Extension.swift */; };
+		8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3997502A71284A00124000 /* UIColor+extension.swift */; };
+		8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3BA63D2A6D785A0040CF4E /* Quote.swift */; };
+		8D3BA6412A6D7AC20040CF4E /* RecordsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */; };
 		8D5C0B7C2A5D3A6400AC89B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */; };
 		8D5C0B7E2A5D3A6400AC89B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */; };
 		8D5C0B832A5D3A6400AC89B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B812A5D3A6400AC89B5 /* Main.storyboard */; };
@@ -29,6 +35,7 @@
 		8D5C0B882A5D3A6500AC89B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B862A5D3A6500AC89B5 /* LaunchScreen.storyboard */; };
 		8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */; };
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
+		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,13 +45,19 @@
 		8D2EAAF82A5D67B100684127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D2EAAFA2A5E7F1600684127 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		8D2EAB012A5FD63200684127 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordListViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchClockViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB082A60016900684127 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordListViewController.swift; sourceTree = "<group>"; };
 		8D2F704D2A677F1100348082 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8D2F704F2A6798E200348082 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeBg.swift; sourceTree = "<group>"; };
+		8D36D9C92A725FEE00502697 /* timeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeButton.swift; sourceTree = "<group>"; };
+		8D3997482A6F67F400124000 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		8D39974E2A70F93A00124000 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		8D3997502A71284A00124000 /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
+		8D3BA63D2A6D785A0040CF4E /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Quote.swift; path = PunchClock/Model/Quote.swift; sourceTree = SOURCE_ROOT; };
+		8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsType.swift; sourceTree = "<group>"; };
 		8D5C0B782A5D3A6400AC89B5 /* PunchClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +68,7 @@
 		8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
+		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +87,7 @@
 		8D2EAAFE2A5E94AF00684127 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */,
 				8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */,
 				8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */,
 				8D2F704D2A677F1100348082 /* LocationService.swift */,
@@ -83,7 +98,9 @@
 		8D2EAAFF2A5E94D000684127 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8D39974E2A70F93A00124000 /* UIButton+Extension.swift */,
 				8D2F704F2A6798E200348082 /* UIView+Extension.swift */,
+				8D3997502A71284A00124000 /* UIColor+extension.swift */,
 				8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */,
 				8D2EAAF42A5D612800684127 /* String+Extension.swift */,
 			);
@@ -95,6 +112,7 @@
 			children = (
 				8D2EAAFA2A5E7F1600684127 /* Month.swift */,
 				8D2EAAF62A5D65DC00684127 /* TimeRecord.swift */,
+				8D3BA63D2A6D785A0040CF4E /* Quote.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -104,10 +122,28 @@
 			children = (
 				8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */,
 				8D2EAB082A60016900684127 /* SettingViewModel.swift */,
-				8D2EAB012A5FD63200684127 /* RecordViewModel.swift */,
 				8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		8D36D9C82A725FBD00502697 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D36D9C92A725FEE00502697 /* timeButton.swift */,
+				8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8D3BA63F2A6D7A430040CF4E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8D3997482A6F67F400124000 /* SettingTableViewController.swift */,
+				8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */,
+				8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		8D5C0B6F2A5D3A6400AC89B5 = {
@@ -129,11 +165,12 @@
 		8D5C0B7A2A5D3A6400AC89B5 /* PunchClock */ = {
 			isa = PBXGroup;
 			children = (
-				8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */,
-				8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */,
 				8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */,
 				8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */,
 				8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */,
+				8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */,
+				8D36D9C82A725FBD00502697 /* View */,
+				8D3BA63F2A6D7A430040CF4E /* Controller */,
 				8D2EAB032A5FD63A00684127 /* View Model */,
 				8D2EAB002A5E94E300684127 /* Model */,
 				8D2EAAFF2A5E94D000684127 /* Extension */,
@@ -228,20 +265,27 @@
 			files = (
 				8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */,
 				8D2EAB0B2A6005C900684127 /* RecordListViewController.swift in Sources */,
+				8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */,
 				8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */,
+				8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */,
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,
-				8D2EAB022A5FD63200684127 /* RecordViewModel.swift in Sources */,
+				8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */,
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
 				8D2EAAF72A5D65DC00684127 /* TimeRecord.swift in Sources */,
 				8D2EAAFB2A5E7F1600684127 /* Month.swift in Sources */,
+				8D3BA6412A6D7AC20040CF4E /* RecordsType.swift in Sources */,
 				8D5C0B7C2A5D3A6400AC89B5 /* AppDelegate.swift in Sources */,
 				8D2EAB052A5FD7B400684127 /* RecordListViewModel.swift in Sources */,
 				8D2EAAF52A5D612800684127 /* String+Extension.swift in Sources */,
 				8D5C0B7E2A5D3A6400AC89B5 /* SceneDelegate.swift in Sources */,
+				8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */,
 				8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */,
+				8D3997512A71284A00124000 /* UIColor+extension.swift in Sources */,
+				8D36D9CA2A725FEE00502697 /* timeButton.swift in Sources */,
 				8D2EAAFD2A5E92D900684127 /* Date+Extension.swift in Sources */,
+				8D39974F2A70F93A00124000 /* UIButton+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,11 +431,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PunchClock/PunchClock.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HJZNDVQG39;
+				DEVELOPMENT_TEAM = 9A828DBKJV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
@@ -406,10 +449,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.icantw.ac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jubehuang.pc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ac_dev_20230714;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -422,11 +464,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PunchClock/PunchClock.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HJZNDVQG39;
+				DEVELOPMENT_TEAM = 9A828DBKJV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
@@ -441,10 +482,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.icantw.ac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jubehuang.pc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ac_dev_20230714;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

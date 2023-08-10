@@ -44,10 +44,10 @@ extension TimeRecord {
     }
     
     var inTimeString: String {
-        self.inTime?.toString() ?? "尚未打卡"
+        self.inTime?.toString(dateFormat: .hourMinute) ?? "尚未打卡"
     }
     
     var outTimeString: String {
-        self.outTime?.toString() ?? "尚未打卡"
+        self.outTime?.toString(dateFormat: .hourMinute) ?? "尚未打卡"
     }
 }

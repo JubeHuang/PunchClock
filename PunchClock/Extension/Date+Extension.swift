@@ -9,31 +9,20 @@ import Foundation.NSData
 
 extension Date {
     
-    func toString() -> String {
+    func toString(dateFormat: DateFormat) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+        dateFormatter.dateFormat = dateFormat.rawValue
         
         return dateFormatter.string(from: self)
     }
     
-    func toTimeString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        
-        return dateFormatter.string(from: self)
-    }
+}
+
+enum DateFormat: String {
     
-    func toDateString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM / dd / yyyy EEEE"
-        
-        return dateFormatter.string(from: self)
-    }
-    
-    func toMonthString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM"
-        
-        return dateFormatter.string(from: self)
-    }
+    case all = "yyyy/MM/dd HH:mm"
+    case hourMinute = "HH:mm"
+    case yearMonthDate = "MMM / dd / yyyy"
+    case weekday = "EEEE"
+    case month = "MMM"
 }
