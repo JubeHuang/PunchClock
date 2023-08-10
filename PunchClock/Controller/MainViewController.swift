@@ -49,31 +49,19 @@ class MainViewController: UIViewController {
             .assign(to: \.text, on: workingHourLabel)
             .store(in: &cancellable)
         
-        viewModel.$isCheckIn.sink { [weak self] isCheckIn in
-            guard let self = self else { return }
-            
-            self.workingHourStack.isHidden = !isCheckIn
-            self.viewModel.checkOutButton.isHidden = !isCheckIn
-            self.viewModel.captionLabel.isHidden = isCheckIn
-            
-            let animator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0.15, options: .curveEaseInOut) {
-                self.workingHourStack.layer.opacity = isCheckIn ? 1 : 0
-            }
-            animator.addAnimations({
-                self.viewModel.checkOutButton.layer.opacity = isCheckIn ? 1 : 0
-            }, delayFactor: 0.3)
-            
-        }.store(in: &cancellable)
-        
-//        viewModel.$isCheckOut.sink { [weak self] isCheckOut in
-//            guard let self = self else { return }
-//
-//            if isCheckOut {
-//                viewModel.displayAlert(viewController: self)
-//            }
-//
-//        }.store(in: &cancellable)
-        
+        viewModel.$isPunchIn
+            .sink { [weak self] isPunchIn in
+                guard let self = self else { return }
+                
+                self.workingHourStack.isHidden = !isPunchIn
+                
+                let animator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0.15, options: .curveEaseInOut) {
+                    self.workingHourStack.layer.opacity = isPunchIn ? 1 : 0
+                }
+                animator.addAnimations({
+                    self.viewModel.checkOutButton.layer.opacity = isPunchIn ? 1 : 0
+                }, delayFactor: 0.3)
+            }.store(in: &cancellable)
     }
     
     private func renderUI() {
@@ -88,7 +76,6 @@ class MainViewController: UIViewController {
         view.addSubview(viewModel.captionLabel)
         
         viewModel.captionLabel.translatesAutoresizingMaskIntoConstraints = false
-        workingHourStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             viewModel.captionLabel.topAnchor.constraint(equalTo: viewModel.checkInButton.bottomAnchor),
             viewModel.captionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 96)
@@ -96,39 +83,16 @@ class MainViewController: UIViewController {
     }
     
     @objc private func checkIn(_ sender: UIButton) {
-        viewModel.checkInButton.isSelected = true
-        viewModel.checkInButton.isUserInteractionEnabled = false
-        
-        viewModel.punchInTimeStr = Date().toString(dateFormat: .hourMinute)
-        viewModel.checkInButton.setTitle(string: viewModel.punchInTimeStr!, button: .work(state: .punchIn))
+        viewModel.isPunchIn = true
         
         viewModel.vibrate()
-        
-        viewModel.isCheckIn = true
     }
     
     @objc private func checkOut(_ sender: UIButton) {
-        viewModel.checkOutButton.isSelected = true
-        viewModel.checkOutButton.isUserInteractionEnabled = false
-        
-        viewModel.punchOutTimeStr = Date().toString(dateFormat: .hourMinute)
-        viewModel.checkOutButton.setTitle(string: viewModel.punchOutTimeStr!, button: .offWork(state: .punchOut))
+        viewModel.isPunchOut = true
         
         viewModel.vibrate()
         
-        viewModel.isCheckOut = true
-        
-        viewModel.displayAlert(title: "恭喜打卡完成", message: "趕快飛奔下班吧～", viewController: self)
+        viewModel.displayAlert(self, title: "恭喜打卡完成", message: "趕快飛奔下班吧～")
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

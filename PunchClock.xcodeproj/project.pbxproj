@@ -35,6 +35,7 @@
 		8D5C0B882A5D3A6500AC89B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B862A5D3A6500AC89B5 /* LaunchScreen.storyboard */; };
 		8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */; };
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
+		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
+		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		8D2EAAFE2A5E94AF00684127 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */,
 				8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */,
 				8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */,
 				8D2F704D2A677F1100348082 /* LocationService.swift */,
@@ -262,6 +265,7 @@
 			files = (
 				8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */,
 				8D2EAB0B2A6005C900684127 /* RecordListViewController.swift in Sources */,
+				8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */,
 				8D2F70502A6798E200348082 /* UIView+Extension.swift in Sources */,
 				8D3997492A6F67F400124000 /* SettingTableViewController.swift in Sources */,
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,

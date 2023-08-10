@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -143,17 +143,17 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" alignment="bottom" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="CSF-6G-bYT">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="bottom" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="CSF-6G-bYT">
                                                         <rect key="frame" x="146" y="0.0" width="167" height="62"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jul/14/2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-MP-BXD">
-                                                                <rect key="frame" x="62.66666666666665" y="0.0" width="104.33333333333331" height="16.333333333333332"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Jul/14/2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtL-MP-BXD">
+                                                                <rect key="frame" x="62.66666666666665" y="0.0" width="104.33333333333331" height="21.333333333333332"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" name="Black80"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Monday" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRp-c3-gpa">
-                                                                <rect key="frame" x="68.333333333333343" y="28.333333333333368" width="98.666666666666657" height="33.666666666666657"/>
+                                                                <rect key="frame" x="68.333333333333343" y="33.333333333333371" width="98.666666666666657" height="28.666666666666671"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                                 <color key="textColor" name="DarkBlue"/>
                                                                 <nil key="highlightedColor"/>
