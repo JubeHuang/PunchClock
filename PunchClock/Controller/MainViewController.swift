@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var quoteTextField: UITextView!
     @IBOutlet weak var iconBgLayer: UIView!
+    @IBOutlet weak var weatherImage: UIImageView!
     
     var viewModel = PunchClockViewModel()
     var cancellable = Set<AnyCancellable>()
@@ -47,6 +48,10 @@ class MainViewController: UIViewController {
         
         viewModel.$workingHourStr
             .assign(to: \.text, on: workingHourLabel)
+            .store(in: &cancellable)
+        
+        viewModel.$weatherIcon
+            .assign(to: \.image, on: weatherImage)
             .store(in: &cancellable)
         
         viewModel.$isPunchIn

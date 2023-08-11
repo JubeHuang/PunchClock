@@ -36,6 +36,9 @@
 		8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */; };
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
 		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
+		8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE22A84DE690000AB22 /* WeatherService.swift */; };
+		8DCADAE52A84DE830000AB22 /* weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE42A84DE830000AB22 /* weather.swift */; };
+		8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +72,9 @@
 		8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
 		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
+		8DCADAE22A84DE690000AB22 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		8DCADAE42A84DE830000AB22 /* weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weather.swift; sourceTree = "<group>"; };
+		8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 				8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */,
 				8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */,
 				8D2F704D2A677F1100348082 /* LocationService.swift */,
+				8DCADAE22A84DE690000AB22 /* WeatherService.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -110,6 +117,8 @@
 		8D2EAB002A5E94E300684127 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */,
+				8DCADAE42A84DE830000AB22 /* weather.swift */,
 				8D2EAAFA2A5E7F1600684127 /* Month.swift */,
 				8D2EAAF62A5D65DC00684127 /* TimeRecord.swift */,
 				8D3BA63D2A6D785A0040CF4E /* Quote.swift */,
@@ -273,12 +282,15 @@
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
+				8DCADAE52A84DE830000AB22 /* weather.swift in Sources */,
 				8D2EAAF72A5D65DC00684127 /* TimeRecord.swift in Sources */,
+				8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */,
 				8D2EAAFB2A5E7F1600684127 /* Month.swift in Sources */,
 				8D3BA6412A6D7AC20040CF4E /* RecordsType.swift in Sources */,
 				8D5C0B7C2A5D3A6400AC89B5 /* AppDelegate.swift in Sources */,
 				8D2EAB052A5FD7B400684127 /* RecordListViewModel.swift in Sources */,
 				8D2EAAF52A5D612800684127 /* String+Extension.swift in Sources */,
+				8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */,
 				8D5C0B7E2A5D3A6400AC89B5 /* SceneDelegate.swift in Sources */,
 				8D30460C2A6D069A00AB0C43 /* ShapeBg.swift in Sources */,
 				8D2EAB072A5FEF6A00684127 /* PunchClockViewModel.swift in Sources */,

@@ -10,9 +10,42 @@ import MapKit
 
 class LocationService: NSObject {
     
+    static let shared = LocationService()
+    
     var manager = CLLocationManager()
     
     var updateCityHandler: ((String) -> Void)?
+    
+    private let cityTWName: [String: String] = [
+        "TPE": "臺北市",
+        "KHH": "高雄市",
+        "NWT": "新北市",
+        "TNN": "臺南市",
+        "TAO": "桃園市",
+        "TXG": "臺中市",
+        "ILN": "宜蘭縣",
+        "HUA": "花蓮縣",
+        "TTT": "臺東縣",
+        "PEN": "澎湖縣",
+        "KEE": "基隆市",
+        "HSZ": "新竹市",
+        "HSQ": "新竹縣",
+        "CYI": "嘉義市",
+        "CYQ": "嘉義縣",
+        "KIN": "金門縣",
+        "LIE": "連江縣",
+        "MIA": "苗栗縣",
+        "CHA": "彰化縣",
+        "NAN": "南投縣",
+        "YUN": "雲林縣",
+        "PIF": "屏東縣"
+    ]
+    
+    private override init() {}
+    
+    deinit {
+        print("LocationService Dead")
+    }
 }
 
 extension LocationService {
@@ -34,18 +67,27 @@ extension LocationService {
 extension LocationService: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        manager.stopUpdatingLocation()
+        
         guard let location = locations.last else { return }
         
         updateCityHandler = { city in
+            WeatherService().getWeatherState(city: city)
             
         }
         
         locationToCity(location, completion: updateCityHandler!)
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("====== Location Manager Error ======\nError: \(error)")
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
             
+        case .authorizedWhenInUse, .authorizedAlways:
+            manager.startUpdatingLocation()
         case .notDetermined:
             requestAuthorization()
         case .restricted, .denied:
@@ -56,25 +98,30 @@ extension LocationService: CLLocationManagerDelegate {
         }
     }
     
-    func locationToCity(_ location: CLLocation, completion: @escaping (String) -> Void) {
+    private func locationToCity(_ location: CLLocation, completion: @escaping (String) -> Void) {
         let geocoder = CLGeocoder()
-        var city = ""
-        
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            
             if let error {
                 print("Location Transfer to City Error: \(error.localizedDescription)")
-                completion("")
                 return
             }
             
-            if let placeMark = placemarks?.first {
-                if let administrativeArea = placeMark.administrativeArea {
-                    completion(administrativeArea)
-                }
+            if let placeMark = placemarks?.first,
+               let administrativeArea = placeMark.administrativeArea,
+               let cityName = self.transferToCH(administrativeArea) {
+                print(cityName)
+                completion(cityName)
             } else {
-                completion("")
+                print("No Place Mark")
             }
         }
+    }
+    
+    private func transferToCH(_ abbr: String) -> String? {
+        guard let cityName = cityTWName[abbr] else {
+            print("====== Not Correspond With Taiwan City Name ======")
+            return nil
+        }
+        return cityName
     }
 }

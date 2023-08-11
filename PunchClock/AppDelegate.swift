@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        LocationService().loadLocation()
+        LocationService.shared.loadLocation()
         
         return true
     }

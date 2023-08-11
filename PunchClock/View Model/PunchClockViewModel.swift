@@ -13,8 +13,8 @@ class PunchClockViewModel {
     
     private let storeManager = FirestoreManager()
     
-    var timerSubscriber: AnyCancellable?
-    var cancellable = Set<AnyCancellable>()
+    private var timerSubscriber: AnyCancellable?
+    private var cancellable = Set<AnyCancellable>()
     
     @Published var isPunchIn: Bool = false {
         didSet {
@@ -69,8 +69,8 @@ class PunchClockViewModel {
         return label
     }()
     
-    var weatherIcon: UIImage = {
-        return UIImage(named: "04")!
+    @Published var weatherIcon: UIImage? = {
+        return UIImage(named: "04")
     }()
     
     var checkInButton: TimeButton = {
@@ -93,13 +93,7 @@ class PunchClockViewModel {
         }
         isPunchIn = punchInTime != nil
         
-        $workingHour
-            .map { hours in
-                let intHours = Int(hours * 10)
-                guard intHours % 10 == 0 else { return "努力工作 \(hours) 小時" }
-                return "努力工作 \(Int(hours)) 小時"
-            }
-            .assign(to: &$workingHourStr)
+        bind()
     }
     
     deinit {
@@ -109,7 +103,23 @@ class PunchClockViewModel {
 
 extension PunchClockViewModel {
     
-    func getTime() {
+    private func bind() {
+        $workingHour
+            .map { hours in
+                let intHours = Int(hours * 10)
+                guard intHours % 10 == 0 else { return "努力工作 \(hours) 小時" }
+                return "努力工作 \(Int(hours)) 小時"
+            }
+            .assign(to: &$workingHourStr)
+        
+        WeatherService().$iconName
+            .map { iconName in
+                return UIImage(named: iconName)
+            }
+            .assign(to: &$weatherIcon)
+    }
+    
+    private func getTime() {
         timerSubscriber = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
             .sink(receiveValue: { [weak self] currentTime in
                 self?.currentTimeStr = currentTime.toString(dateFormat: .hourMinute)
@@ -168,7 +178,7 @@ extension PunchClockViewModel {
         }
     }
     
-    func checkOutBtnState(isSelected: Bool) {
+    private func checkOutBtnState(isSelected: Bool) {
         checkOutButton.isSelected = isSelected
         checkOutButton.isUserInteractionEnabled = !isSelected
         
