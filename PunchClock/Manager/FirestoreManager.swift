@@ -14,6 +14,8 @@ class FirestoreManager {
     
     private var accountMd5: String? { LogInManager().account?.md5 }
     
+    private let testMode = "jubeTest"
+    
     func fetchData(month: String, completeHandler: @escaping([TimeRecord]) -> Void) {
         guard let path = getPath(month: month) else { return }
         
@@ -98,12 +100,13 @@ class FirestoreManager {
     }
     
     private func getPath(month: String) -> String? {
-        guard let accountMd5 else {
-            print("====== Unauthorized ======\n Cannot Upload Data.")
-            return nil
-        }
+//        guard let accountMd5 else {
+//            print("====== Unauthorized ======\nCannot Upload Data.")
+//            return nil
+//        }
         
-        let path = "\(accountMd5)/\(month)/TimeRecords"
+//        let path = "\(accountMd5)/\(month)/TimeRecords"
+        let path = "\(testMode)/\(month)/TimeRecords"
         return path
     }
     

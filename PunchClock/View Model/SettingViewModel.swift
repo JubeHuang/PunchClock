@@ -6,11 +6,23 @@
 //
 
 import Foundation
+import Combine
 
-struct SettingViewModel {
+class SettingViewModel {
     
-    var workingHours: Double = 8
-    var lunchHours: Double = 1
+    var workingHours: Double = 9
     
+    @Published var isOffWorkPushOn: Bool = false
+    @Published var isAutoPunchOutOn: Bool = false
     
+    init() {
+        
+    }
+}
+
+extension SettingViewModel {
+    
+    func addHours() {
+        
+    }
 }

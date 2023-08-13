@@ -38,7 +38,6 @@ class PunchClockViewModel {
             switch isPunchOut {
             case true:
                 punchOutTime = Date()
-                checkOutBtnState(isSelected: isPunchOut)
                 
                 UserDefaultManager.removePunchInTime()
                 
@@ -47,6 +46,7 @@ class PunchClockViewModel {
             case false:
                 punchOutTime = nil
             }
+            checkOutBtnState(isSelected: isPunchOut)
         }
     }
     lazy var punchOutTime: Date? = nil
@@ -67,10 +67,6 @@ class PunchClockViewModel {
         label.text = "雙擊打卡開啟今天的工作"
         label.textColor = .black70
         return label
-    }()
-    
-    @Published var weatherIcon: UIImage? = {
-        return UIImage(named: "04")
     }()
     
     var checkInButton: TimeButton = {
@@ -111,12 +107,6 @@ extension PunchClockViewModel {
                 return "努力工作 \(Int(hours)) 小時"
             }
             .assign(to: &$workingHourStr)
-        
-        WeatherService().$iconName
-            .map { iconName in
-                return UIImage(named: iconName)
-            }
-            .assign(to: &$weatherIcon)
     }
     
     private func getTime() {

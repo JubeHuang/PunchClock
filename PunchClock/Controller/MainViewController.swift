@@ -16,10 +16,12 @@ class MainViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var quoteTextField: UITextView!
     @IBOutlet weak var iconBgLayer: UIView!
+    @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     
     var viewModel = PunchClockViewModel()
     var cancellable = Set<AnyCancellable>()
+    lazy var locationService = LocationService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,7 @@ class MainViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        cancellable.removeAll()
     }
     
     func bind() {
@@ -50,10 +53,14 @@ class MainViewController: UIViewController {
             .assign(to: \.text, on: workingHourLabel)
             .store(in: &cancellable)
         
-        viewModel.$weatherIcon
-            .assign(to: \.image, on: weatherImage)
-            .store(in: &cancellable)
-        
+        locationService.weatherService.$weatherInfo
+            .receive(on: DispatchQueue.main)
+            .sink { _ in }
+            receiveValue: { weatherInfo in
+                self.cityLabel.text = weatherInfo.city
+                self.weatherImage.image = UIImage(named: weatherInfo.iconName)
+            }.store(in: &cancellable)
+
         viewModel.$isPunchIn
             .sink { [weak self] isPunchIn in
                 guard let self = self else { return }

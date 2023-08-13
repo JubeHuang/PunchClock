@@ -15,8 +15,7 @@ class WeatherService {
     
     private var storeDictionary: [String: AnyCancellable] = [:]
     
-    @Published var iconName: String = "04"
-    @Published var cityName: String = ""
+    @Published var weatherInfo: (city: String, iconName: String) = ("", "4")
     
     func getWeatherState(city: String) {
         guard let url = createUrl(city: city) else {
@@ -34,7 +33,7 @@ class WeatherService {
                 }
                 self.storeDictionary.removeValue(forKey: "session")
             } receiveValue: { data in
-                
+                self.parseWeatherData(data)
             }
 
         storeDictionary["session"] = session
@@ -82,11 +81,8 @@ extension WeatherService {
                 let parameterValue = location[0].weatherElement[0].time[0].parameter.parameterValue
                 let cityName = location[0].locationName
                 
-                self.iconName = parameterValue
-                self.cityName = cityName
+                weatherInfo = (city: cityName, iconName: parameterValue)
             }
-            
-            
         } catch {
             print("====== Weather API Decode Error ======\nError: \(error.localizedDescription)")
         }

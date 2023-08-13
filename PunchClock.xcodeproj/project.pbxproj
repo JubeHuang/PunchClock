@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */; };
 		8D2EAAEF2A5D5CB200684127 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAEE2A5D5CB200684127 /* FirebaseFirestore */; };
 		8D2EAAF12A5D5CB200684127 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAF02A5D5CB200684127 /* FirebaseFirestoreSwift */; };
 		8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		8D2EAAF42A5D612800684127 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8D2EAAF62A5D65DC00684127 /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		8D2EAAFF2A5E94D000684127 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */,
 				8D39974E2A70F93A00124000 /* UIButton+Extension.swift */,
 				8D2F704F2A6798E200348082 /* UIView+Extension.swift */,
 				8D3997502A71284A00124000 /* UIColor+extension.swift */,
@@ -280,6 +283,7 @@
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,
 				8D3BA63E2A6D785A0040CF4E /* Quote.swift in Sources */,
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
+				8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
 				8DCADAE52A84DE830000AB22 /* weather.swift in Sources */,

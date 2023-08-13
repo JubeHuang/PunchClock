@@ -12,7 +12,8 @@ class LocationService: NSObject {
     
     static let shared = LocationService()
     
-    var manager = CLLocationManager()
+    private var manager = CLLocationManager()
+    let weatherService = WeatherService()
     
     var updateCityHandler: ((String) -> Void)?
     
@@ -42,10 +43,6 @@ class LocationService: NSObject {
     ]
     
     private override init() {}
-    
-    deinit {
-        print("LocationService Dead")
-    }
 }
 
 extension LocationService {
@@ -72,8 +69,7 @@ extension LocationService: CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         
         updateCityHandler = { city in
-            WeatherService().getWeatherState(city: city)
-            
+            self.weatherService.getWeatherState(city: city)
         }
         
         locationToCity(location, completion: updateCityHandler!)
@@ -109,7 +105,6 @@ extension LocationService: CLLocationManagerDelegate {
             if let placeMark = placemarks?.first,
                let administrativeArea = placeMark.administrativeArea,
                let cityName = self.transferToCH(administrativeArea) {
-                print(cityName)
                 completion(cityName)
             } else {
                 print("No Place Mark")
