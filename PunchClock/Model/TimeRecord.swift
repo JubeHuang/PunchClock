@@ -12,6 +12,7 @@ struct TimeRecord: Codable, Identifiable {
     @DocumentID var id: String?
     var inTime: Date?
     var outTime: Date?
+    var documentID: String?
     
     var punchIn: Timestamp? {
         guard let inTime = inTime else { return nil }
@@ -41,6 +42,13 @@ extension TimeRecord {
     init(in: Date? = nil, out: Date? = nil) {
         self.inTime = `in`
         self.outTime = out
+    }
+    
+    // read
+    init(in: Date? = nil, out: Date? = nil, id: String) {
+        self.inTime = `in`
+        self.outTime = out
+        self.documentID = id
     }
     
     var inTimeString: String {

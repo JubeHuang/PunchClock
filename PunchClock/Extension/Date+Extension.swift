@@ -24,5 +24,6 @@ enum DateFormat: String {
     case hourMinute = "HH:mm"
     case yearMonthDate = "MMM / dd / yyyy"
     case weekday = "EEEE"
-    case month = "MMM"
+    case monthEn = "MMM"
+    case monthInt = "MM"
 }

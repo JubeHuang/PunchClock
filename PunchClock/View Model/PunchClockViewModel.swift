@@ -16,17 +16,21 @@ class PunchClockViewModel {
     private var timerSubscriber: AnyCancellable?
     private var cancellable = Set<AnyCancellable>()
     
+    weak var weatherService = LocationService.shared.weatherService
+    private weak var pushManager = PushManager.shared
+    
     @Published var isPunchIn: Bool = false {
         didSet {
             if isPunchIn, punchInTime == nil {
                 punchInTime = Date()
                 UserDefaultManager.savePunchInTime(punchInTime!)
+                
+                createPush()
             } else if !isPunchIn {
                 punchInTime = nil
             }
             
-            captionLabel.isHidden = isPunchIn
-            checkOutButton.isHidden = !isPunchIn
+            shouldUIHidden(isPunchIn)
             checkInBtnState(isSelected: punchInTime != nil)
         }
     }
@@ -41,8 +45,8 @@ class PunchClockViewModel {
                 
                 UserDefaultManager.removePunchInTime()
                 
-                guard let month = punchInTime?.toString(dateFormat: .month) else { return }
-                storeManager.createData(month: month, in: punchInTime, out: punchOutTime)
+                guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
+                storeManager.createData(in: month, in: punchInTime, out: punchOutTime)
             case false:
                 punchOutTime = nil
             }
@@ -52,22 +56,35 @@ class PunchClockViewModel {
     lazy var punchOutTime: Date? = nil
     var punchOutTimeStr: String? { punchOutTime?.toString(dateFormat: .hourMinute) }
     
-    
-    @Published var workingHour: Double = 9
-    @Published var workingHourStr: String?
+    private var workingHour: Double {
+        UserDefaultManager.getWorkingHours() > 0 ?  UserDefaultManager.getWorkingHours() : 9.0
+    }
+    var workingHourStr: String {
+        isHoursInt ? "努力工作 \(Int(workingHour)) 小時" : "努力工作 \(workingHour) 小時"
+    }
     
     @Published var dateStr: String = { Date().toString(dateFormat: .yearMonthDate) }()
     @Published var weekDayStr: String = { Date().toString(dateFormat: .weekday) }()
     @Published var currentTimeStr: String = { Date().toString(dateFormat: .hourMinute) }()
     
-    @Published var quoteSubject: String = "今天的語錄尚未抵達，不要著急，因為明天可能也到不了。"
+    @Published var quoteStr: String = Wording.defaultQuote.text
     
     lazy var captionLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 100, y: 100, width: 240, height: 30))
-        label.text = "雙擊打卡開啟今天的工作"
+        label.text = Wording.caption.text
         label.textColor = .black70
         return label
     }()
+    
+    lazy var suggestTimeLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 100, y: 100, width: 240, height: 30))
+        label.textColor = .black70
+        return label
+    }()
+    private var suggestTime: Date? {
+        guard let punchInTime else { return nil }
+        return getSuggestTime(from: punchInTime)
+    }
     
     var checkInButton: TimeButton = {
         let btn = TimeButton(frame: CGRect(x: 30, y: 0, width: 300, height: 100))
@@ -80,16 +97,13 @@ class PunchClockViewModel {
         return btn
     }()
     
+    let imageSpacing: CGFloat = 10
+    var isHoursInt: Bool { Int(workingHour * 10) % 10 == 0 }
+    
     init() {
-        getTime()
+        getCurrentTime()
+        getPunchInStateAndTime()
         loadQuote()
-        
-        if let savedTime = UserDefaultManager.getPunchInTime() {
-            punchInTime = savedTime
-        }
-        isPunchIn = punchInTime != nil
-        
-        bind()
     }
     
     deinit {
@@ -99,17 +113,24 @@ class PunchClockViewModel {
 
 extension PunchClockViewModel {
     
-    private func bind() {
-        $workingHour
-            .map { hours in
-                let intHours = Int(hours * 10)
-                guard intHours % 10 == 0 else { return "努力工作 \(hours) 小時" }
-                return "努力工作 \(Int(hours)) 小時"
-            }
-            .assign(to: &$workingHourStr)
+    private func getPunchInStateAndTime() {
+        if let savedTime = UserDefaultManager.getPunchInTime() {
+            self.punchInTime = savedTime
+        }
+        self.isPunchIn = self.punchInTime != nil
     }
     
-    private func getTime() {
+    private func createPush() {
+        guard let suggestTime else { return }
+        pushManager?.createPunchOutPushNotification(on: suggestTime)
+    }
+    
+    private func getSuggestTime(from punchIn: Date) -> Date {
+        let seconds = Int(workingHour * 60 * 60)
+        return punchIn.addingTimeInterval(Double(seconds))
+    }
+    
+    private func getCurrentTime() {
         timerSubscriber = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
             .sink(receiveValue: { [weak self] currentTime in
                 self?.currentTimeStr = currentTime.toString(dateFormat: .hourMinute)
@@ -118,45 +139,6 @@ extension PunchClockViewModel {
     
     private func cancelTimer() {
         self.timerSubscriber?.cancel()
-    }
-    
-    func loadQuote() {
-        storeManager.getQuote { [weak self] quote in
-            self?.quoteSubject = quote
-        }
-    }
-}
-
-extension PunchClockViewModel {
-    
-    func createCheckInButton(controller: MainViewController, action: Selector) {
-        $currentTimeStr
-            .sink(receiveValue: { [weak self] title in
-                self?.checkInButton.setTitle(string: title, button: .work(state: .notPunchIn))
-            })
-            .store(in: &cancellable)
-        
-        checkInButton.addTarget(controller, action: action, for: .touchDownRepeat)
-        
-        checkInButton.layoutButtonImage(at: .Left, spacing: 10)
-        
-        checkInButton.commonLayout(on: controller.view)
-        checkInButton.topAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.topAnchor).isActive = true
-    }
-    
-    func createCheckOutButton(controller: MainViewController, action: Selector) {
-        $currentTimeStr
-            .sink(receiveValue: { [weak self] title in
-                self?.checkOutButton.setTitle(string: title, button: .offWork(state: .notPunchOut))
-            })
-            .store(in: &cancellable)
-        
-        checkOutButton.addTarget(controller, action: action, for: .touchDownRepeat)
-        
-        checkOutButton.layoutButtonImage(at: .Left, spacing: 10)
-        
-        checkOutButton.commonLayout(on: controller.view)
-        checkOutButton.topAnchor.constraint(equalTo: checkInButton.bottomAnchor, constant: 158).isActive = true
     }
     
     private func checkInBtnState(isSelected: Bool) {
@@ -177,20 +159,64 @@ extension PunchClockViewModel {
         }
     }
     
+    private func shouldUIHidden(_ isHidden: Bool) {
+        captionLabel.isHidden = isHidden
+        suggestTimeLabel.isHidden = !isHidden
+        checkOutButton.isHidden = !isHidden
+    }
+}
+
+extension PunchClockViewModel {
+    
+    func createCheckInButton(controller: MainViewController, action: Selector) {
+        $currentTimeStr
+            .sink(receiveValue: { [weak self] title in
+                self?.checkInButton.setTitle(string: title, button: .work(state: .notPunchIn))
+            })
+            .store(in: &cancellable)
+        
+        checkInButton.addTarget(controller, action: action, for: .touchDownRepeat)
+        
+        checkInButton.layoutButtonImage(at: .Left, spacing: imageSpacing)
+        
+        checkInButton.commonLayout(on: controller.view)
+        checkInButton.topAnchor.constraint(equalTo: controller.view.safeAreaLayoutGuide.topAnchor).isActive = true
+    }
+    
+    func createCheckOutButton(controller: MainViewController, action: Selector) {
+        $currentTimeStr
+            .sink(receiveValue: { [weak self] title in
+                self?.checkOutButton.setTitle(string: title, button: .offWork(state: .notPunchOut))
+            })
+            .store(in: &cancellable)
+        
+        checkOutButton.addTarget(controller, action: action, for: .touchDownRepeat)
+        
+        checkOutButton.layoutButtonImage(at: .Left, spacing: imageSpacing)
+        
+        checkOutButton.commonLayout(on: controller.view)
+        checkOutButton.topAnchor.constraint(equalTo: checkInButton.bottomAnchor, constant: 158).isActive = true
+    }
+    
+    func getSuggestTimeStr() {
+        guard let suggestTime else { return }
+        suggestTimeLabel.text = "不加班的Me要 " + suggestTime.toString(dateFormat: .hourMinute) + " 下班"
+    }
+    
+    func loadQuote() {
+        storeManager.getQuote { [weak self] quote in
+            self?.quoteStr = quote
+        }
+    }
+    
+    func resetData() {
+        isPunchIn = false
+        isPunchOut = false
+    }
+    
     func vibrate(intensity: Int = 3) {
         let vibrateFeedback = UIImpactFeedbackGenerator(style: .medium)
         vibrateFeedback.prepare()
         vibrateFeedback.impactOccurred(intensity: 3)
-    }
-    
-    func displayAlert(_ viewController: UIViewController, title: String? = nil, message: String? = nil, actionTitle: String = "YAY") {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: actionTitle, style: .default) { [weak self] _ in
-            self?.isPunchIn = false
-            self?.isPunchOut = false
-        }
-        alertController.addAction(okAction)
-        
-        viewController.present(alertController, animated: true)
     }
 }

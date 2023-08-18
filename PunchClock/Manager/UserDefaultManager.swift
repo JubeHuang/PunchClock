@@ -10,10 +10,10 @@ import Foundation
 class UserDefaultManager {
     
     private static let punchInKey = UserDefaultKey.punchInDate.rawValue
+    private static let workingHoursKey = UserDefaultKey.workingHours.rawValue
     
     static func getPunchInTime() -> Date? {
-        let punchInTime = UserDefaults.standard.object(forKey: punchInKey) as? Date
-        return punchInTime
+        UserDefaults.standard.object(forKey: punchInKey) as? Date
     }
     
     static func savePunchInTime(_ date: Date) {
@@ -24,9 +24,18 @@ class UserDefaultManager {
     static func removePunchInTime() {
         UserDefaults.standard.removeObject(forKey: punchInKey)
     }
+    
+    static func getWorkingHours() -> Double {
+        UserDefaults.standard.double(forKey: workingHoursKey)
+    }
+    
+    static func saveWorkingHours(_ hours:  Double) {
+        UserDefaults.standard.set(hours, forKey: workingHoursKey)
+    }
 }
 
 enum UserDefaultKey: String {
     
     case punchInDate
+    case workingHours
 }

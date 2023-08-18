@@ -5,7 +5,7 @@
 //  Created by Jube on 2023/7/12.
 //
 
-enum Month: String {
+enum Month: String, CaseIterable {
     case Jan
     case Feb
     case Mar

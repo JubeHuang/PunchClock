@@ -5,7 +5,7 @@
 //  Created by Jube on 2023/8/10.
 //
 
-struct Weather: Codable {
+struct WeatherResponse: Codable {
     let records: Records
 }
 

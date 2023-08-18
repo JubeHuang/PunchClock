@@ -11,11 +11,9 @@ import Foundation
 class WeatherService {
     
     private let apiUrl = URL(string: "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001")!
-    private let authorization = "CWB-91AF46FD-294C-453A-8363-4962BF37A16B"
-    
     private var storeDictionary: [String: AnyCancellable] = [:]
     
-    @Published var weatherInfo: (city: String, iconName: String) = ("", "4")
+    @Published var weatherInfo: (city: String, iconName: String) = ("定位中", "4")
     
     func getWeatherState(city: String) {
         guard let url = createUrl(city: city) else {
@@ -33,29 +31,19 @@ class WeatherService {
                 }
                 self.storeDictionary.removeValue(forKey: "session")
             } receiveValue: { data in
+                print(data)
                 self.parseWeatherData(data)
             }
 
         storeDictionary["session"] = session
     }
-    
-    
 }
 
 extension WeatherService {
     
     private func createUrl(city: String) -> URL? {
-        var urlComponent = URLComponents(url: apiUrl, resolvingAgainstBaseURL: true)
-        let query: [String : String] = [
-            "Authorization": authorization,
-            "limit": "2",
-            "locationName": city,
-            "elementName": "Wx",
-            "sort": "time"
-        ]
-        urlComponent?.queryItems = query.map({ URLQueryItem(name: $0.key, value: $0.value) })
-        
-        return urlComponent?.url
+        let param = WeatherRequest(cityName: city)
+        return apiUrl.add(param: param)
     }
     
     private func handleUrlSessionError(_ error: Error) {
@@ -74,7 +62,7 @@ extension WeatherService {
     
     private func parseWeatherData(_ data: Data) {
         do {
-            let weather = try JSONDecoder().decode(Weather.self, from: data)
+            let weather = try JSONDecoder().decode(WeatherResponse.self, from: data)
             let location = weather.records.location
             
             if location.count > 0 {

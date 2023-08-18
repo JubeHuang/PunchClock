@@ -11,7 +11,6 @@ import MapKit
 class LocationService: NSObject {
     
     static let shared = LocationService()
-    
     private var manager = CLLocationManager()
     let weatherService = WeatherService()
     
@@ -24,7 +23,7 @@ class LocationService: NSObject {
         "TNN": "臺南市",
         "TAO": "桃園市",
         "TXG": "臺中市",
-        "ILN": "宜蘭縣",
+        "ILA": "宜蘭縣",
         "HUA": "花蓮縣",
         "TTT": "臺東縣",
         "PEN": "澎湖縣",
@@ -113,6 +112,7 @@ extension LocationService: CLLocationManagerDelegate {
     }
     
     private func transferToCH(_ abbr: String) -> String? {
+        print(abbr, "縮寫")
         guard let cityName = cityTWName[abbr] else {
             print("====== Not Correspond With Taiwan City Name ======")
             return nil

@@ -22,8 +22,8 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>use for weather</string>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>use for weather</string>
+	<string></string>
 </dict>
 </plist>
