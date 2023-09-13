@@ -10,26 +10,31 @@ import UIKit
 import Combine
 
 class RecordListViewModel {
-
+    
     var records: [TimeRecord]
     var hasRecords: Bool { records.count > 0 }
-
+    
     @Published var monthString = Date().toString(dateFormat: .monthEn)
-    var monthInt: Int = {Int(Date().toString(dateFormat: .monthInt)) ?? 0}()
+    var monthInt = Int(Date().toString(dateFormat: .monthInt)) ?? 0 {
+        didSet {
+            if monthInt < 1 {
+                monthInt = 12
+            } else if monthInt > 12 {
+                monthInt = 1
+            }
+        }
+    }
     
     lazy var firestoreManager = FirestoreManager()
     
-
     init() {
         self.records = [TimeRecord]()
-
-        fetchData()
-        print(monthInt)
+        firestoreManager.fetchData(in: monthString) { self.records = $0 }
     }
 }
 
 extension RecordListViewModel {
-
+    
     func records(at index: Int) -> TimeRecord {
         return self.records[index]
     }
@@ -46,55 +51,43 @@ extension RecordListViewModel {
     
     func getWorkingHourStr(at index: Int) -> String {
         let record = records(at: index)
-        let text = Wording.duration.text
         
-        guard let punchInTime = record.inTime, let punchOutTime = record.outTime else { return text + "太長了" }
-        let seconds = punchInTime.timeIntervalSince(punchOutTime)
+        guard let punchInTime = record.inTime, let punchOutTime = record.outTime else { return "太長了" }
+        let seconds = punchOutTime.timeIntervalSince(punchInTime)
         
         let hours = Int(seconds) / 3600
         let minutes = (Int(seconds) % 3600) / 60
         
-        return text + "\(hours) 小時 \(minutes) 分鐘"
+        return "\(hours)時\(minutes)分"
     }
     
-    func mayShowEmptyState(_ view: UIView) {
-        if !hasRecords {
-            let emptyImageView = UIImageView(image: UIImage(named: "12"))
-            emptyImageView.contentMode = .scaleAspectFit
-            emptyImageView.backgroundColor = .black
-            view.addSubview(emptyImageView)
+    func mayShowEmptyState(image: UIImageView, tableView: UITableView) {
+        image.isHidden = hasRecords
+        tableView.isHidden = !hasRecords
+    }
+    
+    private func fetchData(image: UIImageView, tableView: UITableView) {
+        firestoreManager.fetchData(in: monthString) { records in
+            self.records = records
             
-            emptyImageView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                emptyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                emptyImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                emptyImageView.widthAnchor.constraint(equalToConstant: 200),
-                emptyImageView.heightAnchor.constraint(equalToConstant: 200)
-            ])
+            self.mayShowEmptyState(image: image, tableView: tableView)
+            
+            tableView.reloadData()
+            print("monthInt:\(self.monthInt), recordsCounts: \(self.records.count)")
         }
-    }
-
-    private func fetchData() {
-        firestoreManager.fetchData(in: monthString) { self.records = $0 }
-        print(records.count, "records")
+        print(records.count, "records \(monthString)", hasRecords)
     }
     
-    func nextMonth() {
-        let index = monthInt % Month.allCases.count
-        monthString = Month.allCases[index].value
-        
-        monthInt = (monthInt + 1) % 12
-        
-        fetchData()
+    func nextMonth(image: UIImageView, tableView: UITableView) {
+        monthInt += 1
+        monthString = Month.allCases[monthInt - 1].value
+        fetchData(image: image, tableView: tableView)
     }
     
-    func preMonth() {
-        let index = (monthInt + Month.allCases.count - 1) % Month.allCases.count
-        monthString = Month.allCases[index].value
-        
-        monthInt = (monthInt + Month.allCases.count - 1) % Month.allCases.count
-    
-        fetchData()
+    func preMonth(image: UIImageView, tableView: UITableView) {
+        monthInt -= 1
+        monthString = Month.allCases[monthInt - 1].value
+        fetchData(image: image, tableView: tableView)
     }
     
     private func deleteRecord(at index: Int) {
@@ -119,11 +112,11 @@ extension RecordListViewModel {
         return cell
     }
     
-    func deleteCell(_ tableView: UITableView, view: UIView, cellForRowAt indexPath: IndexPath) {
+    func deleteCell(_ tableView: UITableView, imageView: UIImageView, cellForRowAt indexPath: IndexPath) {
         deleteRecord(at: indexPath.row)
         
         tableView.deleteRows(at: [indexPath], with: .automatic)
         
-        mayShowEmptyState(view)
+        mayShowEmptyState(image: imageView, tableView: tableView)
     }
 }

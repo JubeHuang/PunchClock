@@ -18,7 +18,7 @@ class FirestoreManager {
     
     func fetchData(in month: String, completeHandler: @escaping([TimeRecord]) -> Void) {
         guard let path = getPath(month: month) else { return }
-        
+        print(path)
         db.collection(path)
             .order(by: "punchIn", descending: false)
             .getDocuments { [weak self] snapshots, error in
@@ -37,6 +37,7 @@ class FirestoreManager {
                     
                     return TimeRecord(in: inTimestamp.dateValue(), out: outTimestamp.dateValue(), id: document.documentID)
                 }
+                print(timeRecords.count, "fetch from firestore")
                 completeHandler(timeRecords)
                 
                 self?.log(successTitle: "Data Fetched Success")

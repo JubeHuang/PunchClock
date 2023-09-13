@@ -11,6 +11,7 @@ import Combine
 class RecordListViewController: UIViewController {
     
     @IBOutlet weak var recordListTableView: UITableView!
+    @IBOutlet weak var emptyImage: UIImageView!
     @IBOutlet weak var monthLabel: UILabel!
     
     var viewModel = RecordListViewModel()
@@ -34,27 +35,18 @@ class RecordListViewController: UIViewController {
             .map({ $0.uppercased() })
             .assign(to: \.text!, on: monthLabel)
             .store(in: &cancellable)
+        
+        viewModel.mayShowEmptyState(image: emptyImage, tableView: recordListTableView)
     }
     
     @IBAction func nextMonth(_ sender: Any) {
-        viewModel.nextMonth()
-        
-        recordListTableView.reloadData()
+        viewModel.nextMonth(image: emptyImage, tableView: recordListTableView)
     }
     
     @IBAction func preMonth(_ sender: Any) {
-        viewModel.preMonth()
+        viewModel.preMonth(image: emptyImage, tableView: recordListTableView)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
 
 extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -68,7 +60,7 @@ extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         viewModel.deleteCell(tableView,
-                             view: view,
+                             imageView: emptyImage,
                              cellForRowAt: indexPath)
     }
 }
