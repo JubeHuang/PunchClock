@@ -109,6 +109,10 @@ extension RecordListViewModel {
         cell.punchOutLabel.text = getPunchOutStr(at: row)
         cell.workingHourLabel.text = getWorkingHourStr(at: row)
         
+        let imageColorNames = ["R", "B", "P", "Y", "G"]
+        cell.leftCircleImage.image = UIImage(named: "circleLeft" + imageColorNames[row % 5])
+        cell.rightCircleImage.image = UIImage(named: "circleRight" + imageColorNames[row % 5])
+        
         return cell
     }
     

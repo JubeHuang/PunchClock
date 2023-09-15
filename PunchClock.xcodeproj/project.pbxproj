@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */; };
-		8D26DF722A9B19060070723D /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DF712A9B19060070723D /* UIView+Extension.swift */; };
 		8D2EAAEF2A5D5CB200684127 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAEE2A5D5CB200684127 /* FirebaseFirestore */; };
 		8D2EAAF12A5D5CB200684127 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAF02A5D5CB200684127 /* FirebaseFirestoreSwift */; };
 		8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */; };
@@ -46,11 +45,13 @@
 		8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE22A84DE690000AB22 /* WeatherService.swift */; };
 		8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */; };
 		8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */; };
+		8DEE32DA2AB1C4B90036572E /* DashedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE32D92AB1C4B90036572E /* DashedLineView.swift */; };
+		8DEE32DC2AB1C8150036572E /* EditTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE32DB2AB1C8150036572E /* EditTimeViewController.swift */; };
+		8DEE32DE2AB1C83E0036572E /* EditTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		8D26DF712A9B19060070723D /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		8D2EAAF42A5D612800684127 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8D2EAAF62A5D65DC00684127 /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
@@ -89,6 +90,9 @@
 		8DCADAE22A84DE690000AB22 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionError.swift; sourceTree = "<group>"; };
+		8DEE32D92AB1C4B90036572E /* DashedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashedLineView.swift; sourceTree = "<group>"; };
+		8DEE32DB2AB1C8150036572E /* EditTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeViewController.swift; sourceTree = "<group>"; };
+		8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +130,6 @@
 				8D3997502A71284A00124000 /* UIColor+extension.swift */,
 				8D2EAAFC2A5E92D900684127 /* Date+Extension.swift */,
 				8D2EAAF42A5D612800684127 /* String+Extension.swift */,
-				8D26DF712A9B19060070723D /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 		8D2EAB032A5FD63A00684127 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */,
 				8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */,
 				8D2EAB082A60016900684127 /* SettingViewModel.swift */,
 				8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */,
@@ -160,6 +164,7 @@
 			children = (
 				8D36D9C92A725FEE00502697 /* timeButton.swift */,
 				8D30460B2A6D069A00AB0C43 /* ShapeBg.swift */,
+				8DEE32D92AB1C4B90036572E /* DashedLineView.swift */,
 				8D3FCECE2A8CAB90006799CF /* RecordViewCell.swift */,
 				8D2F704F2A6798E200348082 /* GradientView.swift */,
 			);
@@ -169,6 +174,7 @@
 		8D3BA63F2A6D7A430040CF4E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8DEE32DB2AB1C8150036572E /* EditTimeViewController.swift */,
 				8D3997482A6F67F400124000 /* SettingTableViewController.swift */,
 				8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */,
 				8D2EAB0A2A6005C900684127 /* RecordListViewController.swift */,
@@ -293,7 +299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D26DF722A9B19060070723D /* UIView+Extension.swift in Sources */,
 				8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */,
 				8D2EAB0B2A6005C900684127 /* RecordListViewController.swift in Sources */,
 				8D3FCEE12A8DCD61006799CF /* Wording.swift in Sources */,
@@ -306,10 +311,13 @@
 				8D3FCECD2A8A1B1B006799CF /* PushManager.swift in Sources */,
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
 				8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */,
+				8DEE32DA2AB1C4B90036572E /* DashedLineView.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
 				8D3FCEDF2A8DC41F006799CF /* Url+Extension.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
 				8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */,
+				8DEE32DE2AB1C83E0036572E /* EditTimeViewModel.swift in Sources */,
+				8DEE32DC2AB1C8150036572E /* EditTimeViewController.swift in Sources */,
 				8D2EAAF72A5D65DC00684127 /* TimeRecord.swift in Sources */,
 				8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */,
 				8D2EAAFB2A5E7F1600684127 /* Month.swift in Sources */,

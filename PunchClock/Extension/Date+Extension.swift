@@ -15,7 +15,6 @@ extension Date {
         
         return dateFormatter.string(from: self)
     }
-    
 }
 
 enum DateFormat: String {

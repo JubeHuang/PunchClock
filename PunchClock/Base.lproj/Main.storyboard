@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -86,19 +86,11 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="努力工作 9 小時..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7jX-xP-Z5t">
-                                        <rect key="frame" x="48" y="82.333333333333343" width="129.66666666666666" height="19.333333333333329"/>
+                                        <rect key="frame" x="48" y="82.333333333333343" width="226" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" name="Black70"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuQ-no-lsk">
-                                        <rect key="frame" x="209.66666666666669" y="75" width="64.333333333333314" height="34.333333333333343"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Test"/>
-                                        <connections>
-                                            <action selector="test:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hsj-5W-YQV"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Mn-SE-yPP">
                                         <rect key="frame" x="306" y="72" width="40" height="40"/>
                                         <constraints>
@@ -419,6 +411,7 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hMo-h3-EyE">
                                                             <rect key="frame" x="285" y="0.6666666666666643" width="51" height="31"/>
+                                                            <color key="onTintColor" name="PrimaryBlue"/>
                                                             <connections>
                                                                 <action selector="punchOutPush:" destination="15z-KG-CdG" eventType="valueChanged" id="25h-8F-97J"/>
                                                             </connections>
@@ -459,6 +452,7 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yMV-il-5Bx">
                                                             <rect key="frame" x="285" y="0.0" width="51" height="43"/>
+                                                            <color key="onTintColor" name="PrimaryBlue"/>
                                                             <connections>
                                                                 <action selector="autoPunchOut:" destination="15z-KG-CdG" eventType="valueChanged" id="fQe-ex-ayY"/>
                                                             </connections>
@@ -524,6 +518,16 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1x5-pV-G0s">
                                                     <rect key="frame" x="16" y="0.0" width="382" height="48"/>
                                                     <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleLeftR" translatesAutoresizingMaskIntoConstraints="NO" id="RxL-Rp-ulS">
+                                                            <rect key="frame" x="0.0" y="-12" width="79" height="72"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="79" id="7Ns-iW-IC4"/>
+                                                                <constraint firstAttribute="height" constant="72" id="fum-oj-a5R"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleRightR" translatesAutoresizingMaskIntoConstraints="NO" id="sMQ-FW-DR6">
+                                                            <rect key="frame" x="303" y="-12" width="79" height="72"/>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="start" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MdO-sv-3GD">
                                                             <rect key="frame" x="16" y="12" width="42" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
@@ -531,12 +535,12 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ugt-HU-jzi">
-                                                            <rect key="frame" x="70" y="17" width="250" height="14.333333333333339"/>
+                                                            <rect key="frame" x="70" y="17" width="250" height="14.333333333333336"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OS3-Lc-r5N">
-                                                                    <rect key="frame" x="0.0" y="6" width="94.666666666666671" height="2"/>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OS3-Lc-r5N" customClass="DashedLineView" customModule="PunchClock" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="7" width="94.666666666666671" height="0.0"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="2" id="wby-Rf-sIW"/>
+                                                                        <constraint firstAttribute="height" id="wby-Rf-sIW"/>
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="working" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saC-2i-JFp">
@@ -545,10 +549,10 @@
                                                                     <color key="textColor" name="Black70"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7O-Hy-NQw">
-                                                                    <rect key="frame" x="155.33333333333334" y="6" width="94.666666666666657" height="2"/>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7O-Hy-NQw" customClass="DashedLineView" customModule="PunchClock" customModuleProvider="target">
+                                                                    <rect key="frame" x="155.33333333333334" y="7" width="94.666666666666657" height="0.0"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="2" id="Xop-ht-RcP"/>
+                                                                        <constraint firstAttribute="height" id="Xop-ht-RcP"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -565,15 +569,21 @@
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
+                                                        <constraint firstItem="RxL-Rp-ulS" firstAttribute="leading" secondItem="1x5-pV-G0s" secondAttribute="leading" id="7g2-YN-Ok0"/>
                                                         <constraint firstAttribute="bottom" secondItem="MdO-sv-3GD" secondAttribute="bottom" constant="12" id="9Fb-TK-GFb"/>
                                                         <constraint firstItem="MdO-sv-3GD" firstAttribute="leading" secondItem="1x5-pV-G0s" secondAttribute="leading" constant="16" id="AhX-4C-hhf"/>
                                                         <constraint firstItem="MdO-sv-3GD" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="DYD-tK-0YJ"/>
+                                                        <constraint firstItem="sMQ-FW-DR6" firstAttribute="width" secondItem="RxL-Rp-ulS" secondAttribute="width" id="GuT-WC-nvm"/>
+                                                        <constraint firstItem="sMQ-FW-DR6" firstAttribute="height" secondItem="RxL-Rp-ulS" secondAttribute="height" id="K7V-BG-GFE"/>
                                                         <constraint firstAttribute="height" constant="52" id="LRf-Lk-UQy"/>
+                                                        <constraint firstItem="RxL-Rp-ulS" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="PQw-7i-pP0"/>
                                                         <constraint firstItem="Yw5-9N-X2V" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="R0v-C4-MAS"/>
                                                         <constraint firstItem="Yw5-9N-X2V" firstAttribute="leading" secondItem="ugt-HU-jzi" secondAttribute="trailing" constant="12" id="TMD-yi-YTv"/>
                                                         <constraint firstItem="ugt-HU-jzi" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="VvA-wq-wcw"/>
+                                                        <constraint firstItem="sMQ-FW-DR6" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="eMC-fz-Ho1"/>
                                                         <constraint firstItem="ugt-HU-jzi" firstAttribute="leading" secondItem="MdO-sv-3GD" secondAttribute="trailing" constant="12" id="emF-ph-Mcq"/>
                                                         <constraint firstAttribute="trailing" secondItem="Yw5-9N-X2V" secondAttribute="trailing" constant="16" id="fya-mC-xWi"/>
+                                                        <constraint firstAttribute="trailing" secondItem="sMQ-FW-DR6" secondAttribute="trailing" id="j8f-8J-nWN"/>
                                                         <constraint firstItem="MdO-sv-3GD" firstAttribute="top" secondItem="1x5-pV-G0s" secondAttribute="top" constant="12" id="mVL-YW-PEd"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -598,10 +608,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="leftDotLine" destination="OS3-Lc-r5N" id="j6w-Vp-aDp"/>
+                                            <outlet property="leftCircleImage" destination="RxL-Rp-ulS" id="MjN-V4-rsr"/>
                                             <outlet property="punchInLabel" destination="MdO-sv-3GD" id="uX8-yO-vah"/>
                                             <outlet property="punchOutLabel" destination="Yw5-9N-X2V" id="b2r-wN-om7"/>
-                                            <outlet property="rightDotLine" destination="e7O-Hy-NQw" id="eTH-mM-8r4"/>
+                                            <outlet property="rightCircleImage" destination="sMQ-FW-DR6" id="FNY-kH-9zF"/>
                                             <outlet property="selectedBackgroundView" destination="yDY-5a-x2y" id="6wv-Lh-iCY"/>
                                             <outlet property="workingHourLabel" destination="saC-2i-JFp" id="m5S-ZK-Ax3"/>
                                         </connections>
@@ -627,7 +637,7 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ZZy-mH-fD6">
                                                 <rect key="frame" x="0.0" y="1.6666666666666643" width="28" height="25.000000000000004"/>
-                                                <color key="tintColor" name="Black80"/>
+                                                <color key="tintColor" name="PrimaryBlue"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ZZy-mH-fD6" secondAttribute="height" multiplier="1:1" id="Ckm-zW-ke7"/>
                                                     <constraint firstAttribute="width" constant="28" id="rgq-6I-gBX"/>
@@ -718,6 +728,21 @@
             </objects>
             <point key="canvasLocation" x="1991.3043478260872" y="834.375"/>
         </scene>
+        <!--Edit Time View Controller-->
+        <scene sceneID="8qe-22-4He">
+            <objects>
+                <viewController id="20y-N5-TF4" customClass="EditTimeViewController" customModule="PunchClock" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vhq-X5-Zth">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="b1O-3I-wGz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wOg-s3-9bK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2913" y="834"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="mSl-s4-WnH">
             <objects>
@@ -762,7 +787,7 @@
         <!--首頁-->
         <scene sceneID="ZW4-9G-4tI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ol8-Cj-EDE" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" id="ol8-Cj-EDE" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="首頁" id="3fJ-Xe-AQM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="atU-VK-Ec3">
@@ -788,6 +813,8 @@
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="circleA" width="144" height="173"/>
         <image name="circleB" width="131" height="244"/>
+        <image name="circleLeftR" width="69" height="52"/>
+        <image name="circleRightR" width="69" height="52"/>
         <image name="minus" width="20" height="20"/>
         <image name="nextMonth" width="20" height="20"/>
         <image name="preMonth" width="20" height="20"/>
@@ -800,7 +827,7 @@
             <color red="0.45100000500679016" green="0.4779999852180481" blue="0.50199997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="DarkBlue">
-            <color red="0.0" green="0.14900000393390656" blue="0.23499999940395355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.16862745098039217" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="GradientBlueEnd">
             <color red="0.70999997854232788" green="0.77600002288818359" blue="0.87800002098083496" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
