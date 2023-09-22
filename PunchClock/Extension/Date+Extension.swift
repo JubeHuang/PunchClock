@@ -25,4 +25,5 @@ enum DateFormat: String {
     case weekday = "EEEE"
     case monthEn = "MMM"
     case monthInt = "MM"
+    case date = "dd"
 }

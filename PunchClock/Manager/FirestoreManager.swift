@@ -68,7 +68,7 @@ class FirestoreManager {
         }
     }
     
-    func updateData(month: String, index: Int, in: Date? = nil, out: Date? = nil) {
+    func updateData(in month: String, index: Int, in: Date? = nil, out: Date? = nil) {
         let record = TimeRecord(in: `in`, out: out)
         
         getDocumentID(month: month, at: index) { [weak self] path, documentID in

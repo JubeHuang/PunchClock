@@ -58,4 +58,8 @@ extension TimeRecord {
     var outTimeString: String {
         self.outTime?.toString(dateFormat: .hourMinute) ?? "尚未打卡"
     }
+    
+    var dateString: String {
+        self.inTime?.toString(dateFormat: .date) ?? "?"
+    }
 }

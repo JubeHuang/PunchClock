@@ -16,18 +16,71 @@ class RecordListViewController: UIViewController {
     
     var viewModel = RecordListViewModel()
     var cancellable = Set<AnyCancellable>()
-
+    
+    let inTimePicker = UIPickerView()
+    let outTimePicker = UIPickerView()
+    var inToolBar: UIToolbar {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let cancelBtn = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(pickerCancel))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(inPickerDone))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([cancelBtn, flexibleSpace, doneBtn], animated: true)
+        return toolBar
+    }
+    var outToolBar: UIToolbar {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let cancelBtn = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(pickerCancel))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(outPickerDone))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([cancelBtn, flexibleSpace, doneBtn], animated: true)
+        return toolBar
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         bind()
+        settingView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         cancellable.removeAll()
+    }
+    
+    func settingView() {
+        recordListTableView.estimatedRowHeight = UITableView.automaticDimension
+        
+        inTimePicker.delegate = self
+        inTimePicker.dataSource = self
+        outTimePicker.delegate = self
+        outTimePicker.dataSource = self
+    }
+    
+    @objc func inPickerDone() {
+        self.view.endEditing(true)
+        
+        viewModel.pickerDone(isInTime: true,
+                             in: recordListTableView,
+                             picker: inTimePicker)
+    }
+    
+    @objc func outPickerDone() {
+        self.view.endEditing(true)
+        
+        viewModel.pickerDone(isInTime: false,
+                             in: recordListTableView,
+                             picker: outTimePicker)
+    }
+    
+    @objc func pickerCancel() {
+        self.view.endEditing(true)
     }
     
     func bind() {
@@ -39,14 +92,31 @@ class RecordListViewController: UIViewController {
         viewModel.mayShowEmptyState(image: emptyImage, tableView: recordListTableView)
     }
     
+    func createBlackView() -> UIView {
+        let blackView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        blackView.backgroundColor = .darkBlue?.withAlphaComponent(0.5)
+        blackView.isUserInteractionEnabled = false
+        blackView.alpha = 0
+        self.view.addSubview(blackView)
+        
+        return blackView
+    }
+    
     @IBAction func nextMonth(_ sender: Any) {
-        viewModel.nextMonth(image: emptyImage, tableView: recordListTableView)
+        viewModel.nextMonth(emptyImage: emptyImage, tableView: recordListTableView)
     }
     
     @IBAction func preMonth(_ sender: Any) {
-        viewModel.preMonth(image: emptyImage, tableView: recordListTableView)
+        viewModel.preMonth(emptyImage: emptyImage, tableView: recordListTableView)
     }
     
+    @IBAction func saveEditTime(_ sender: Any) {
+        viewModel.saveEditTime(in: recordListTableView, emptyImage: emptyImage)
+    }
+    
+    @IBAction func cancelEditTime(_ sender: Any) {
+        viewModel.cancelEditTime(in: recordListTableView)
+    }
 }
 
 extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -55,12 +125,62 @@ extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        viewModel.configCell(tableView, cellForRowAt: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "\(RecordViewCell.self)", for: indexPath) as! RecordViewCell
+        
+        cell.inTextfield.inputAccessoryView = inToolBar
+        cell.inTextfield.inputView = inTimePicker
+        cell.outTextfield.inputAccessoryView = outToolBar
+        cell.outTextfield.inputView = outTimePicker
+        
+        return viewModel.configCell(cell, cellForRowAt: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         viewModel.deleteCell(tableView,
-                             imageView: emptyImage,
+                             emptyImage: emptyImage,
                              cellForRowAt: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (viewModel.selectedIndexPath == indexPath && viewModel.isExpand) ? 188 : UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.selectedRowAt(indexPath: indexPath, pickers: [inTimePicker, outTimePicker])
+        
+        tableView.performBatchUpdates{
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3,
+                                                           delay: 0.1,
+                                                           options: .curveEaseInOut) {
+                tableView.scrollToRow(at: indexPath,
+                                      at: .none,
+                                      animated: true)
+            }
+        }
+    }
+}
+
+extension RecordListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        component == 0 ? 24 : (component == 1) ? 1 : 60
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        component == 0 ? viewModel.hours[row] : (component == 1) ? ":" : viewModel.minustes[row]
+    }
+}
+
+extension RecordListViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        let blackView = createBlackView()
+//        
+//        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0) {
+//            blackView.alpha = 1
+//        }
     }
 }

@@ -15,6 +15,8 @@ class EditTimeViewModel {
     
     let firestore = FirestoreManager()
     
+    
+    
     init(dataInfo: DataInfo) {
         self.dataInfo = dataInfo
     }
