@@ -9,6 +9,10 @@ import Foundation
 import Combine
 import UIKit.UIViewController
 
+protocol AutoPunchOutDelegate: AnyObject {
+    func autoPunchOutDelegate(functionIsOn: Bool)
+}
+
 class SettingViewModel {
     
     private weak var pushManager = PushManager.shared

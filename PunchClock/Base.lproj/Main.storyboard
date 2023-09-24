@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -708,7 +708,6 @@
                                                         <constraint firstItem="td1-jv-KBd" firstAttribute="top" secondItem="Jgu-Ii-7DW" secondAttribute="top" constant="16" id="ERS-p4-4Tm"/>
                                                         <constraint firstItem="sMQ-FW-DR6" firstAttribute="width" secondItem="RxL-Rp-ulS" secondAttribute="width" id="GuT-WC-nvm"/>
                                                         <constraint firstItem="sMQ-FW-DR6" firstAttribute="height" secondItem="RxL-Rp-ulS" secondAttribute="height" id="K7V-BG-GFE"/>
-                                                        <constraint firstAttribute="height" constant="52" id="LRf-Lk-UQy"/>
                                                         <constraint firstItem="RxL-Rp-ulS" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="PQw-7i-pP0"/>
                                                         <constraint firstItem="Jgu-Ii-7DW" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" constant="2" id="PV5-Jg-JNg"/>
                                                         <constraint firstItem="Yw5-9N-X2V" firstAttribute="centerY" secondItem="1x5-pV-G0s" secondAttribute="centerY" id="R0v-C4-MAS"/>
@@ -726,11 +725,6 @@
                                                             <integer key="value" value="6"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="LRf-Lk-UQy"/>
-                                                        </mask>
-                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -872,7 +866,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y5h-zD-12S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="ikU-Ja-wCS">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="396" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <viewLayoutGuide key="safeArea" id="Jcp-Tj-0cp"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

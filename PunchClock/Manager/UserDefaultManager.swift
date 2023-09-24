@@ -10,15 +10,33 @@ import Foundation
 class UserDefaultManager {
     
     private static let punchInKey = UserDefaultKey.punchInDate.rawValue
+    private static let punchOutKey = UserDefaultKey.punchOutDate.rawValue
     private static let workingHoursKey = UserDefaultKey.workingHours.rawValue
     
     static func getPunchInTime() -> Date? {
         UserDefaults.standard.object(forKey: punchInKey) as? Date
     }
     
+    static func getPunchOutTime() -> Date? {
+        UserDefaults.standard.object(forKey: punchOutKey) as? Date
+    }
+    
     static func savePunchInTime(_ date: Date) {
         UserDefaults.standard.setValue(date, forKey: punchInKey)
         print(date, "saved")
+        
+        let workingHours = getWorkingHours()
+        if workingHours > 0 {
+            let hour = Int(workingHours)
+            let min = Int(workingHours * 10) % 10
+            if let punchOutTime = Calendar.current.date(bySettingHour: hour, minute: min, second: 0, of: date) {
+                savePunchOutTime(punchOutTime)
+            }
+        }
+    }
+    
+    static func savePunchOutTime(_ date: Date) {
+        UserDefaults.standard.setValue(date, forKey: punchOutKey)
     }
     
     static func removePunchInTime() {
@@ -37,5 +55,6 @@ class UserDefaultManager {
 enum UserDefaultKey: String {
     
     case punchInDate
+    case punchOutDate
     case workingHours
 }

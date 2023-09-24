@@ -11,7 +11,7 @@ import UIKit
 
 class PunchClockViewModel {
     
-    private let storeManager = FirestoreManager()
+    private let firestoreManager = FirestoreManager()
     
     private var timerSubscriber: AnyCancellable?
     private var cancellable = Set<AnyCancellable>()
@@ -46,7 +46,7 @@ class PunchClockViewModel {
                 UserDefaultManager.removePunchInTime()
                 
                 guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
-                storeManager.createData(in: month, in: punchInTime, out: punchOutTime)
+                firestoreManager.createData(in: month, in: punchInTime, out: punchOutTime)
             case false:
                 punchOutTime = nil
             }
@@ -204,7 +204,7 @@ extension PunchClockViewModel {
     }
     
     func loadQuote() {
-        storeManager.getQuote { [weak self] quote in
+        firestoreManager.getQuote { [weak self] quote in
             self?.quoteStr = quote
         }
     }
@@ -220,3 +220,18 @@ extension PunchClockViewModel {
         vibrateFeedback.impactOccurred(intensity: 3)
     }
 }
+
+//extension PunchClockViewModel: AutoPunchOutDelegate {
+//
+//    func autoPunchOutDelegate(functionIsOn: Bool) {
+//        if functionIsOn,
+//           let inTime = UserDefaultManager.getPunchInTime() {
+//
+//
+//            let outTime = Calendar.current.date(bySettingHour: <#T##Int#>, minute: <#T##Int#>, second: 0, of: inTime)
+//
+//            guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
+//            firestoreManager.createData(in: month, in: inTime, out: punchOutTime)
+//        }
+//    }
+//}

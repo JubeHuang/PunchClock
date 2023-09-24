@@ -9,7 +9,7 @@ import UserNotifications
 import UIKit
 
 protocol PushManagerDelegate: AnyObject {
-    func pushManagerDelegate(_ controller: PushManager, isOffWorkPushOn: Bool)
+    func pushManagerDelegate(_ manager: PushManager, isOffWorkPushOn: Bool)
 }
 
 class PushManager {

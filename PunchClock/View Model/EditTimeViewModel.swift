@@ -13,7 +13,7 @@ class EditTimeViewModel {
     
     var dataInfo: DataInfo
     
-    let firestore = FirestoreManager()
+    let firestoreManager = FirestoreManager()
     
     
     
@@ -22,6 +22,6 @@ class EditTimeViewModel {
     }
     
     func delete() {
-        firestore.deleteData(in: dataInfo.month, at: dataInfo.index, with: dataInfo.id)
+        firestoreManager.deleteData(in: dataInfo.month, at: dataInfo.index, with: dataInfo.id)
     }
 }
