@@ -52,11 +52,11 @@ extension TimeRecord {
     }
     
     var inTimeString: String {
-        self.inTime?.toString(dateFormat: .hourMinute) ?? "尚未打卡"
+        self.inTime?.toString(dateFormat: .hourMinute) ?? Wording.notPunch.text
     }
     
     var outTimeString: String {
-        self.outTime?.toString(dateFormat: .hourMinute) ?? "尚未打卡"
+        self.outTime?.toString(dateFormat: .hourMinute) ?? Wording.notPunch.text
     }
     
     var dateString: String {

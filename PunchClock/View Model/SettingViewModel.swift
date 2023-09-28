@@ -20,7 +20,11 @@ class SettingViewModel {
     @Published var workingHours: Double
     
     @Published var isOffWorkPushOn: Bool = false
-    @Published var isAutoPunchOutOn: Bool = false
+    @Published var isAutoPunchOutOn: Bool = false {
+        didSet {
+            UserDefaultManager.saveAutoPunchOutState(isOn: isAutoPunchOutOn)
+        }
+    }
     
     lazy var isAddBtnEnabled: Bool = true
     lazy var isMinusBtnEnabled: Bool = true
@@ -33,6 +37,8 @@ class SettingViewModel {
         self.workingHours = UserDefaultManager.getWorkingHours() > minHours ? UserDefaultManager.getWorkingHours() : workingHours
         
         pushManager?.delegate = self
+        
+        self.isAutoPunchOutOn = UserDefaultManager.getAutoPunchOutState()
     }
 }
 
@@ -65,6 +71,10 @@ extension SettingViewModel {
             let suggestTime = punchInTime.addingTimeInterval(timeInterval)
 
             pushManager?.createPunchOutPushNotification(on: suggestTime)
+            
+            if isAutoPunchOutOn {
+                UserDefaultManager.savePunchInTime(punchInTime)
+            }
         }
     }
     

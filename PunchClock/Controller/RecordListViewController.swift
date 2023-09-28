@@ -17,6 +17,7 @@ class RecordListViewController: UIViewController {
     var viewModel = RecordListViewModel()
     var cancellable = Set<AnyCancellable>()
     
+    var tableview: UITableView?
     let inTimePicker = UIPickerView()
     let outTimePicker = UIPickerView()
     var inToolBar: UIToolbar {
@@ -112,6 +113,7 @@ class RecordListViewController: UIViewController {
     
     @IBAction func saveEditTime(_ sender: Any) {
         viewModel.saveEditTime(in: recordListTableView, emptyImage: emptyImage)
+        tableView(tableview!, heightForRowAt: viewModel.selectedIndexPath!)
     }
     
     @IBAction func cancelEditTime(_ sender: Any) {
@@ -120,6 +122,10 @@ class RecordListViewController: UIViewController {
 }
 
 extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
+    var table: Int? {
+        return 9
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.records.count
     }
@@ -142,6 +148,7 @@ extension RecordListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        self.tableview = tableView
         return (viewModel.selectedIndexPath == indexPath && viewModel.isExpand) ? 188 : UITableView.automaticDimension
     }
     

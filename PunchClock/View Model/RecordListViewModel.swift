@@ -62,14 +62,21 @@ extension RecordListViewModel {
     
     func getWorkingHourStr(at index: Int) -> String {
         let record = records(at: index)
+        let punchInTime = record.inTimeString
+        let punchOutTime = record.outTimeString
         
-        guard let punchInTime = record.inTime, let punchOutTime = record.outTime else { return "太長了" }
-        let seconds = punchOutTime.timeIntervalSince(punchInTime)
-        
-        let hours = Int(seconds) / 3600
-        let minutes = (Int(seconds) % 3600) / 60
-        
-        return "\(hours)時\(minutes)分"
+        if punchInTime.count == 5, punchOutTime.count == 5 {
+            if let inHour = Int(punchInTime.prefix(2)),
+               let outHour = Int(punchOutTime.prefix(2)),
+               let inMinute = Int(punchInTime.suffix(2)),
+               let outMinute = Int(punchOutTime.suffix(2)) {
+                let hours = outHour - inHour
+                let minutes = outMinute - inMinute
+                
+                return "\(hours)小時\(minutes)分"
+            }
+        }
+        return ""
     }
     
     func mayShowEmptyState(image: UIImageView, tableView: UITableView) {

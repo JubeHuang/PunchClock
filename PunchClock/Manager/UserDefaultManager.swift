@@ -12,6 +12,7 @@ class UserDefaultManager {
     private static let punchInKey = UserDefaultKey.punchInDate.rawValue
     private static let punchOutKey = UserDefaultKey.punchOutDate.rawValue
     private static let workingHoursKey = UserDefaultKey.workingHours.rawValue
+    private static let autoPunchOutKey = UserDefaultKey.autoPunchOutState.rawValue
     
     static func getPunchInTime() -> Date? {
         UserDefaults.standard.object(forKey: punchInKey) as? Date
@@ -23,24 +24,25 @@ class UserDefaultManager {
     
     static func savePunchInTime(_ date: Date) {
         UserDefaults.standard.setValue(date, forKey: punchInKey)
-        print(date, "saved")
+        print(date, "saved PubchIn")
         
         let workingHours = getWorkingHours()
-        if workingHours > 0 {
-            let hour = Int(workingHours)
-            let min = Int(workingHours * 10) % 10
-            if let punchOutTime = Calendar.current.date(bySettingHour: hour, minute: min, second: 0, of: date) {
-                savePunchOutTime(punchOutTime)
-            }
-        }
+        let seconds = workingHours * 3600
+        savePunchOutTime(date.addingTimeInterval(seconds))
+    }
+    
+    static func getAutoPunchOutState() -> Bool {
+        UserDefaults.standard.bool(forKey: autoPunchOutKey)
     }
     
     static func savePunchOutTime(_ date: Date) {
         UserDefaults.standard.setValue(date, forKey: punchOutKey)
+        print(date, "saved PunchOut")
     }
     
-    static func removePunchInTime() {
+    static func removeAllPunchTime() {
         UserDefaults.standard.removeObject(forKey: punchInKey)
+        UserDefaults.standard.removeObject(forKey: punchOutKey)
     }
     
     static func getWorkingHours() -> Double {
@@ -50,6 +52,10 @@ class UserDefaultManager {
     static func saveWorkingHours(_ hours:  Double) {
         UserDefaults.standard.set(hours, forKey: workingHoursKey)
     }
+    
+    static func saveAutoPunchOutState(isOn: Bool) {
+        UserDefaults.standard.set(isOn, forKey: autoPunchOutKey)
+    }
 }
 
 enum UserDefaultKey: String {
@@ -57,4 +63,5 @@ enum UserDefaultKey: String {
     case punchInDate
     case punchOutDate
     case workingHours
+    case autoPunchOutState
 }

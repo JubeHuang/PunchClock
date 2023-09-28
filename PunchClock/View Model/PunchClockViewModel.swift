@@ -19,13 +19,21 @@ class PunchClockViewModel {
     weak var weatherService = LocationService.shared.weatherService
     private weak var pushManager = PushManager.shared
     
+    lazy var isOffWorkPushOn = false {
+        didSet {
+            if isOffWorkPushOn {
+                createPush()
+            }
+        }
+    }
+    
     @Published var isPunchIn: Bool = false {
         didSet {
             if isPunchIn, punchInTime == nil {
                 punchInTime = Date()
                 UserDefaultManager.savePunchInTime(punchInTime!)
                 
-                createPush()
+                getSuggestTimeStr()
             } else if !isPunchIn {
                 punchInTime = nil
             }
@@ -41,9 +49,13 @@ class PunchClockViewModel {
         didSet {
             switch isPunchOut {
             case true:
-                punchOutTime = Date()
+                if isAutoPunchOut(), let savedOutTime = UserDefaultManager.getPunchOutTime() {
+                    punchOutTime = savedOutTime
+                } else {
+                    punchOutTime = Date()
+                }
                 
-                UserDefaultManager.removePunchInTime()
+                UserDefaultManager.removeAllPunchTime()
                 
                 guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
                 firestoreManager.createData(in: month, in: punchInTime, out: punchOutTime)
@@ -104,6 +116,8 @@ class PunchClockViewModel {
         getCurrentTime()
         getPunchInStateAndTime()
         loadQuote()
+        
+        pushManager?.delegate = self
     }
     
     deinit {
@@ -126,8 +140,8 @@ extension PunchClockViewModel {
     }
     
     private func getSuggestTime(from punchIn: Date) -> Date {
-        let seconds = Int(workingHour * 60 * 60)
-        return punchIn.addingTimeInterval(Double(seconds))
+        let seconds = workingHour * 60 * 60
+        return punchIn.addingTimeInterval(seconds)
     }
     
     private func getCurrentTime() {
@@ -148,6 +162,13 @@ extension PunchClockViewModel {
         if isSelected {
             checkInButton.setTitle(string: punchInTimeStr!, button: .work(state: .punchIn))
         }
+    }
+    
+    private func isAutoPunchOut() -> Bool {
+        if let outTime = UserDefaultManager.getPunchOutTime() {
+            return UserDefaultManager.getAutoPunchOutState() && outTime <= Date()
+        }
+        return false
     }
     
     private func checkOutBtnState(isSelected: Bool) {
@@ -209,6 +230,12 @@ extension PunchClockViewModel {
         }
     }
     
+    func checkAutoPunchOut() {
+        if isAutoPunchOut() {
+            self.isPunchOut = true
+        }
+    }
+    
     func resetData() {
         isPunchIn = false
         isPunchOut = false
@@ -221,17 +248,8 @@ extension PunchClockViewModel {
     }
 }
 
-//extension PunchClockViewModel: AutoPunchOutDelegate {
-//
-//    func autoPunchOutDelegate(functionIsOn: Bool) {
-//        if functionIsOn,
-//           let inTime = UserDefaultManager.getPunchInTime() {
-//
-//
-//            let outTime = Calendar.current.date(bySettingHour: <#T##Int#>, minute: <#T##Int#>, second: 0, of: inTime)
-//
-//            guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
-//            firestoreManager.createData(in: month, in: inTime, out: punchOutTime)
-//        }
-//    }
-//}
+extension PunchClockViewModel: PushManagerDelegate {
+    func pushManagerDelegate(_ manager: PushManager, isOffWorkPushOn: Bool) {
+        self.isOffWorkPushOn = isOffWorkPushOn
+    }
+}
