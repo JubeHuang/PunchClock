@@ -42,6 +42,8 @@
 		8D5C0B882A5D3A6500AC89B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B862A5D3A6500AC89B5 /* LaunchScreen.storyboard */; };
 		8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */; };
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
+		8D60791B2BC2825100ADFF9C /* PushManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */; };
+		8D60791D2BC289E900ADFF9C /* AutoPunchOutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */; };
 		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
 		8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE22A84DE690000AB22 /* WeatherService.swift */; };
 		8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */; };
@@ -87,6 +89,8 @@
 		8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
+		8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManagerDelegate.swift; sourceTree = "<group>"; };
+		8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoPunchOutDelegate.swift; sourceTree = "<group>"; };
 		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
 		8DCADAE22A84DE690000AB22 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
@@ -204,7 +208,7 @@
 				8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */,
 				8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */,
 				8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */,
-				8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */,
+				8D6079192BC2821300ADFF9C /* protocol */,
 				8D36D9C82A725FBD00502697 /* View */,
 				8D3BA63F2A6D7A430040CF4E /* Controller */,
 				8D2EAB032A5FD63A00684127 /* View Model */,
@@ -218,6 +222,16 @@
 				8D2EAAF82A5D67B100684127 /* GoogleService-Info.plist */,
 			);
 			path = PunchClock;
+			sourceTree = "<group>";
+		};
+		8D6079192BC2821300ADFF9C /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */,
+				8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */,
+				8D3BA6402A6D7AC20040CF4E /* RecordsType.swift */,
+			);
+			path = protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,10 +323,12 @@
 				8D2F704E2A677F1100348082 /* LocationService.swift in Sources */,
 				8D3BA63E2A6D785A0040CF4E /* QuoteResponse.swift in Sources */,
 				8D3FCECD2A8A1B1B006799CF /* PushManager.swift in Sources */,
+				8D60791B2BC2825100ADFF9C /* PushManagerDelegate.swift in Sources */,
 				8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */,
 				8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */,
 				8DEE32DA2AB1C4B90036572E /* DashedLineView.swift in Sources */,
 				8D2EAB092A60016900684127 /* SettingViewModel.swift in Sources */,
+				8D60791D2BC289E900ADFF9C /* AutoPunchOutDelegate.swift in Sources */,
 				8D3FCEDF2A8DC41F006799CF /* Url+Extension.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
 				8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */,
@@ -486,11 +502,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -519,11 +535,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

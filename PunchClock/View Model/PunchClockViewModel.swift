@@ -51,6 +51,7 @@ class PunchClockViewModel {
             case true:
                 if isAutoPunchOut(), let savedOutTime = UserDefaultManager.getPunchOutTime() {
                     punchOutTime = savedOutTime
+                    resetData()
                 } else {
                     punchOutTime = Date()
                 }

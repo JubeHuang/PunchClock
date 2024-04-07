@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         bind()
-//        viewModel.checkAutoPunchOut()
+        viewModel.checkAutoPunchOut()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

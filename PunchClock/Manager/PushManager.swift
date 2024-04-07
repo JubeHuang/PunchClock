@@ -8,10 +8,6 @@
 import UserNotifications
 import UIKit
 
-protocol PushManagerDelegate: AnyObject {
-    func pushManagerDelegate(_ manager: PushManager, isOffWorkPushOn: Bool)
-}
-
 class PushManager {
     
     static let shared = PushManager()

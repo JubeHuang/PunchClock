@@ -16,7 +16,7 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var autoPunchOutSwitch: UISwitch!
     @IBOutlet weak var hoursLabel: UILabel!
     
-    let viewModel = SettingViewModel(workingHours: 9.0)
+    let viewModel = SettingViewModel()
     var cancellable = Set<AnyCancellable>()
     
     override func viewDidLoad() {

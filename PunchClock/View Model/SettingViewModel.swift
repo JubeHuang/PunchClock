@@ -9,15 +9,11 @@ import Foundation
 import Combine
 import UIKit.UIViewController
 
-protocol AutoPunchOutDelegate: AnyObject {
-    func autoPunchOutDelegate(functionIsOn: Bool)
-}
-
 class SettingViewModel {
     
     private weak var pushManager = PushManager.shared
     
-    @Published var workingHours: Double
+    @Published var workingHours: Double = 9.0
     
     @Published var isOffWorkPushOn: Bool = false
     @Published var isAutoPunchOutOn: Bool = false {
@@ -30,11 +26,11 @@ class SettingViewModel {
     lazy var isMinusBtnEnabled: Bool = true
     
     let maxHours = 24.0
-    let minHours = 0.0
+    let minHours = 0.5
     let gap = 0.5
     
-    init(workingHours: Double) {
-        self.workingHours = UserDefaultManager.getWorkingHours() > minHours ? UserDefaultManager.getWorkingHours() : workingHours
+    init() {
+        self.workingHours = UserDefaultManager.getWorkingHours() >= minHours ? UserDefaultManager.getWorkingHours() : workingHours
         
         pushManager?.delegate = self
         

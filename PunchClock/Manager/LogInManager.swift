@@ -26,7 +26,7 @@ class LogInManager: NSObject {
         UserDefaults.standard.removeObject(forKey: "account")
     }
     
-    @objc func appleSignIn() {
+    func appleSignIn() {
         let authorizationAppleIDRequests = [
             ASAuthorizationAppleIDProvider().createRequest(),
             ASAuthorizationPasswordProvider().createRequest()
