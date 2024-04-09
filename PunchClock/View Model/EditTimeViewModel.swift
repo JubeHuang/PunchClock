@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias DataInfo = (month: String, inTime: String, outTime: String?, index: Int, id: String)
+typealias DataInfo = (month: String, year: String, inTime: String, outTime: String?, index: Int, id: String)
 
 class EditTimeViewModel {
     
@@ -22,6 +22,6 @@ class EditTimeViewModel {
     }
     
     func delete() {
-        firestoreManager.deleteData(in: dataInfo.month, at: dataInfo.index, with: dataInfo.id)
+        firestoreManager.deleteData(in: (dataInfo.month, dataInfo.year), at: dataInfo.index, with: dataInfo.id)
     }
 }

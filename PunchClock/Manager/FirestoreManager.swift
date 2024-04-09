@@ -10,14 +10,16 @@ import FirebaseFirestore
 
 class FirestoreManager {
     
+    typealias MonthYear = (month: String, year: String)
+    
     private let db = Firestore.firestore()
     
     private var accountMd5: String? { LogInManager().account?.md5 }
     
     private let testMode = "jubeTest"
     
-    func fetchData(in month: String, completeHandler: @escaping([TimeRecord]) -> Void) {
-        guard let path = getPath(month: month) else { return }
+    func fetchData(in time: MonthYear, completeHandler: @escaping([TimeRecord]) -> Void) {
+        guard let path = getPath(time: time) else { return }
         print(path)
         db.collection(path)
             .order(by: "punchIn", descending: false)
@@ -44,8 +46,8 @@ class FirestoreManager {
             }
     }
     
-    func createData(in month: String, in: Date? = nil, out: Date? = nil) {
-        guard let path = getPath(month: month) else { return }
+    func createData(in time: MonthYear, in: Date? = nil, out: Date? = nil) {
+        guard let path = getPath(time: time) else { return }
         
         let record = TimeRecord(in: `in`, out: out)
         
@@ -56,8 +58,8 @@ class FirestoreManager {
         }
     }
     
-    func deleteData(in month: String, at index: Int, with id: String) {
-        getDocumentID(month: month, at: index) { [weak self] path, documentID in
+    func deleteData(in time: MonthYear, at index: Int, with id: String) {
+        getDocumentID(time: time, at: index) { [weak self] path, documentID in
             if id == documentID {
                 self?.db.collection(path).document(documentID).delete()
                 
@@ -68,10 +70,10 @@ class FirestoreManager {
         }
     }
     
-    func updateData(in month: String, index: Int, in: Date? = nil, out: Date? = nil) {
+    func updateData(in time: MonthYear, index: Int, in: Date? = nil, out: Date? = nil) {
         let record = TimeRecord(in: `in`, out: out)
         
-        getDocumentID(month: month, at: index) { [weak self] path, documentID in
+        getDocumentID(time: time, at: index) { [weak self] path, documentID in
             guard let self else { return }
             
             self.db.collection(path)
@@ -107,19 +109,19 @@ class FirestoreManager {
             }
     }
     
-    private func getPath(month: String) -> String? {
+    private func getPath(time: MonthYear) -> String? {
 //        guard let accountMd5 else {
 //            print("====== Unauthorized ======\nCannot Upload Data.")
 //            return nil
 //        }
         
 //        let path = "\(accountMd5)/\(month)/TimeRecords"
-        let path = "\(testMode)/\(month)/TimeRecords"
+        let path = "\(testMode)/\(time.month)\(time.year)/TimeRecords"
         return path
     }
     
-    private func getDocumentID(month: String, at index: Int, completeHandler: @escaping(String, String) -> Void) {
-        guard let path = getPath(month: month) else { return }
+    private func getDocumentID(time: MonthYear, at index: Int, completeHandler: @escaping(String, String) -> Void) {
+        guard let path = getPath(time: time) else { return }
         
         db.collection(path)
             .order(by: "punchIn", descending: false)

@@ -10,9 +10,12 @@ import Foundation
 
 class WeatherService {
     
-    private let apiUrl = URL(string: "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001")!
-    private var storeDictionary: [String: AnyCancellable] = [:]
-    
+    private var apiUrl: URL {
+        let urlString = (Bundle.main.object(forInfoDictionaryKey: "weatherAPI") as? String)?.replacingOccurrences(of: "\\", with: "")
+        print(urlString!)
+        return URL(string: urlString ?? "")!
+    }
+    private var storeSession: [String: AnyCancellable] = [:]
     @Published var weatherInfo: (city: String, iconName: String) = ("定位中", "4")
     
     func getWeatherState(city: String) {
@@ -29,13 +32,13 @@ class WeatherService {
                 if case .failure(let error) = completion {
                     self.handleUrlSessionError(error)
                 }
-                self.storeDictionary.removeValue(forKey: "session")
+                self.storeSession.removeValue(forKey: "session")
             } receiveValue: { data in
                 print(data)
                 self.parseWeatherData(data)
             }
 
-        storeDictionary["session"] = session
+        storeSession["session"] = session
     }
 }
 

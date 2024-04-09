@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  PunchClock
+//
+//  Created by Jube on 2024/3/26.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+WEATHER_API = https:\/\/opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001

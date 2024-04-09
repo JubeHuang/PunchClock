@@ -12,7 +12,7 @@ class LocationService: NSObject {
     
     static let shared = LocationService()
     private var manager = CLLocationManager()
-    let weatherService = WeatherService()
+    var weatherService = WeatherService()
     
     var updateCityHandler: ((String) -> Void)?
     

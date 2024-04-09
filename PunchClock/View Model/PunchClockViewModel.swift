@@ -58,8 +58,9 @@ class PunchClockViewModel {
                 
                 UserDefaultManager.removeAllPunchTime()
                 
-                guard let month = punchInTime?.toString(dateFormat: .monthEn) else { return }
-                firestoreManager.createData(in: month, in: punchInTime, out: punchOutTime)
+                guard let month = punchInTime?.toString(dateFormat: .monthEn),
+                      let year = punchInTime?.toString(dateFormat: .year) else { return }
+                firestoreManager.createData(in: (month, year), in: punchInTime, out: punchOutTime)
             case false:
                 punchOutTime = nil
             }

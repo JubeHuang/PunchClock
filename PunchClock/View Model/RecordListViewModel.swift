@@ -17,25 +17,29 @@ class RecordListViewModel {
     var selectedIndexPath: IndexPath?
     var isExpand: Bool = false
     
-    let hours = (0...23).map {String(format: "%02d", $0)}
-    let minustes = (0...59).map {String(format: "%02d", $0)}
+    let hours = (0...23).map { String(format: "%02d", $0) }
+    let minustes = (0...59).map { String(format: "%02d", $0) }
     
     @Published var monthString = Date().toString(dateFormat: .monthEn)
+    @Published var yearString = Date().toString(dateFormat: .year)
     var monthInt = Int(Date().toString(dateFormat: .monthInt)) ?? 0 {
         didSet {
             if monthInt < 1 {
                 monthInt = 12
+                yearInt -= 1
             } else if monthInt > 12 {
                 monthInt = 1
+                yearInt += 1
             }
         }
     }
+    var yearInt = Int(Date().toString(dateFormat: .year)) ?? 0
     
     lazy var firestoreManager = FirestoreManager()
     
     init() {
         self.records = [TimeRecord]()
-        firestoreManager.fetchData(in: monthString) { self.records = $0 }
+        firestoreManager.fetchData(in: (monthString, yearString)) { self.records = $0 }
     }
 }
 
@@ -79,14 +83,10 @@ extension RecordListViewModel {
         return ""
     }
     
-    func mayShowEmptyState(image: UIImageView, tableView: UITableView) {
-        image.isHidden = hasRecords
-        tableView.isHidden = !hasRecords
-    }
-    
     func nextMonth(emptyImage: UIImageView, tableView: UITableView) {
         monthInt += 1
         monthString = Month.allCases[monthInt - 1].value
+        yearString = "\(yearInt)"
         
         selectedIndexPath = nil
         
@@ -96,30 +96,41 @@ extension RecordListViewModel {
     func preMonth(emptyImage: UIImageView, tableView: UITableView) {
         monthInt -= 1
         monthString = Month.allCases[monthInt - 1].value
+        yearString = "\(yearInt)"
         
         selectedIndexPath = nil
         
         fetchData(emptyImage: emptyImage, tableView: tableView)
     }
     
-    func saveEditTime(in tableView: UITableView, emptyImage: UIImageView) {
+    func saveEditTime(in tableView: UITableView, emptyImage: UIImageView, onFailure: @escaping(String) -> Void) {
         guard let selectedCell = selectedCell(in: tableView) else { return }
         
-        let punchInText = selectedCell.inTextfield.text
-        let punchOutText = selectedCell.outTextfield.text
+        let punchInText = selectedCell.inTextfield.text ?? ""
+        let punchOutText = selectedCell.outTextfield.text ?? ""
+        let punchInPlaceholder = selectedCell.inTextfield.placeholder ?? ""
+        let punchOutPlaceholder = selectedCell.outTextfield.placeholder ?? ""
         
-        if let punchInText, punchInText != "" {
-            selectedCell.punchInLabel.text = punchInText
+        let inText = punchInText.isEmpty ? punchInPlaceholder : punchInText
+        let outText = punchOutText.isEmpty ? punchOutPlaceholder : punchOutText
+        
+        selectedCell.punchInLabel.text = punchInText.isEmpty ? nil : punchInText
+        selectedCell.punchOutLabel.text = punchOutText.isEmpty ? nil : punchOutText
+        
+        if editTimeVerify(inText: inText, outText: outText) {
+            updateData(inTimeString: punchInText, outTimeString: punchOutText)
+            
+            selectedCell.toDefaultState()
+            setPlaceholder(on: selectedCell.inTextfield, with: selectedCell.punchInLabel.text)
+            setPlaceholder(on: selectedCell.outTextfield, with: selectedCell.punchOutLabel.text)
+        } else {
+            onFailure("下班時間必須晚於上班時間歐！")
         }
-        if let punchOutText,  punchOutText != "" {
-            selectedCell.punchOutLabel.text = punchOutText
-        }
-        
-        updateData(inTimeString: punchInText, outTimeString: punchOutText)
-        
-        selectedCell.toDefaultState()
-        selectedCell.inTextfield.attributedPlaceholder = NSAttributedString(string: selectedCell.punchInLabel.text!, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white70!])
-        selectedCell.outTextfield.attributedPlaceholder = NSAttributedString(string: selectedCell.punchOutLabel.text!, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white70!])
+    }
+    
+    private func setPlaceholder(on textfield: UITextField, with text: String?) {
+        guard let text else { return }
+        textfield.attributedPlaceholder = NSAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white70!])
     }
     
     func cancelEditTime(in tableView: UITableView) {
@@ -127,6 +138,16 @@ extension RecordListViewModel {
         selectedCell.toDefaultState()
         
         isExpand = false
+    }
+    
+    private func editTimeVerify(inText: String, outText: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = DateFormat.hourMinute.rawValue
+        
+        guard let inTime = dateFormatter.date(from: inText),
+              let outTime = dateFormatter.date(from: outText) else { return false }
+        print("inTime:\(inTime), outTime:\(outTime)")
+        return inTime <= outTime
     }
     
     func pickerDone(isInTime: Bool, in tableView: UITableView, picker: UIPickerView) {
@@ -143,9 +164,26 @@ extension RecordListViewModel {
         }
     }
     
+    func fetchData(emptyImage: UIImageView, tableView: UITableView) {
+        firestoreManager.fetchData(in: (monthString, yearString)) { records in
+            self.records = records
+            
+            self.mayShowEmptyState(image: emptyImage, tableView: tableView)
+            
+            tableView.reloadData()
+            print("monthInt:\(self.monthInt), recordsCounts: \(self.records.count)")
+        }
+        print(records.count, "records \(monthString)", hasRecords)
+    }
+    
+    private func mayShowEmptyState(image: UIImageView, tableView: UITableView) {
+        image.isHidden = hasRecords
+        tableView.isHidden = !hasRecords
+    }
+    
     private func selectedCell(in tableView: UITableView) -> RecordViewCell? {
         guard let selectedIndexPath else { return nil }
-        return tableView.cellForRow(at: selectedIndexPath) as! RecordViewCell
+        return tableView.cellForRow(at: selectedIndexPath) as? RecordViewCell
     }
     
     private func setPickerDefaultValue(_ picker: UIPickerView, time: String, in textfield: UITextField? = nil) {
@@ -164,19 +202,7 @@ extension RecordListViewModel {
         
         records.remove(at: index)
         
-        firestoreManager.deleteData(in: monthString, at: index, with: documentID)
-    }
-    
-    private func fetchData(emptyImage: UIImageView, tableView: UITableView) {
-        firestoreManager.fetchData(in: monthString) { records in
-            self.records = records
-            
-            self.mayShowEmptyState(image: emptyImage, tableView: tableView)
-            
-            tableView.reloadData()
-            print("monthInt:\(self.monthInt), recordsCounts: \(self.records.count)")
-        }
-        print(records.count, "records \(monthString)", hasRecords)
+        firestoreManager.deleteData(in: (monthString, yearString), at: index, with: documentID)
     }
     
     private func updateData(inTimeString: String?, outTimeString: String?) {
@@ -195,7 +221,7 @@ extension RecordListViewModel {
             outTime = calandar.date(bySettingHour: hour, minute: min, second: 0, of: outTime!) ?? outTime
         }
         
-        firestoreManager.updateData(in: monthString, index: selectedIndexPath!.row, in: inTime, out: outTime)
+        firestoreManager.updateData(in: (monthString, yearString), index: selectedIndexPath!.row, in: inTime, out: outTime)
     }
 }
 

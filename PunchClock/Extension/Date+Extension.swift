@@ -20,6 +20,7 @@ extension Date {
 enum DateFormat: String {
     
     case all = "yyyy/MM/dd HH:mm"
+    case year = "yyyy"
     case hourMinute = "HH:mm"
     case yearMonthDate = "MMM / dd / yyyy"
     case weekday = "EEEE"

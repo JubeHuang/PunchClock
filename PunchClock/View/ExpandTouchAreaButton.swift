@@ -9,7 +9,7 @@ import UIKit
 
 class ExpandTouchAreaButton: UIButton {
     
-    var touchEdgeInsets:UIEdgeInsets?
+    var touchEdgeInsets: UIEdgeInsets?
     
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         var frame = self.bounds

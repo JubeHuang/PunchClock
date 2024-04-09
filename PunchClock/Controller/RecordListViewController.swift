@@ -13,6 +13,7 @@ class RecordListViewController: UIViewController {
     @IBOutlet weak var recordListTableView: UITableView!
     @IBOutlet weak var emptyImage: UIImageView!
     @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
     
     var viewModel = RecordListViewModel()
     var cancellable = Set<AnyCancellable>()
@@ -47,6 +48,12 @@ class RecordListViewController: UIViewController {
         // Do any additional setup after loading the view.
         bind()
         settingView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchData(emptyImage: emptyImage, tableView: recordListTableView)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -90,7 +97,9 @@ class RecordListViewController: UIViewController {
             .assign(to: \.text!, on: monthLabel)
             .store(in: &cancellable)
         
-        viewModel.mayShowEmptyState(image: emptyImage, tableView: recordListTableView)
+        viewModel.$yearString
+            .assign(to: \.text!, on: yearLabel)
+            .store(in: &cancellable)
     }
     
     func createBlackView() -> UIView {
@@ -112,7 +121,11 @@ class RecordListViewController: UIViewController {
     }
     
     @IBAction func saveEditTime(_ sender: Any) {
-        viewModel.saveEditTime(in: recordListTableView, emptyImage: emptyImage)
+        viewModel.saveEditTime(in: recordListTableView,
+                               emptyImage: emptyImage,
+                               onFailure: { text in
+            self.displayAlert(title: "Oops", message: text, actionTitle: "OK")
+        })
         tableView(tableview!, heightForRowAt: viewModel.selectedIndexPath!)
     }
     
