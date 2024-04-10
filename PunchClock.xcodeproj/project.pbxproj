@@ -41,19 +41,15 @@
 		8D5C0B882A5D3A6500AC89B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B862A5D3A6500AC89B5 /* LaunchScreen.storyboard */; };
 		8D5C0B902A5D3AA900AC89B5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */; };
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
-<<<<<<< Updated upstream
 		8D60791B2BC2825100ADFF9C /* PushManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */; };
 		8D60791D2BC289E900ADFF9C /* AutoPunchOutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */; };
-=======
 		8DBDDC132BB2787E009B66A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DBDDC122BB2787E009B66A7 /* GoogleService-Info.plist */; };
 		8DBDDC152BB27A02009B66A7 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8DBDDC142BB27A02009B66A7 /* Config.xcconfig */; };
->>>>>>> Stashed changes
 		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
 		8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE22A84DE690000AB22 /* WeatherService.swift */; };
 		8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */; };
 		8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */; };
 		8DEE32DA2AB1C4B90036572E /* DashedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE32D92AB1C4B90036572E /* DashedLineView.swift */; };
-		8DEE32DE2AB1C83E0036572E /* EditTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,19 +88,15 @@
 		8D5C0B8F2A5D3AA900AC89B5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
-<<<<<<< Updated upstream
 		8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManagerDelegate.swift; sourceTree = "<group>"; };
 		8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoPunchOutDelegate.swift; sourceTree = "<group>"; };
-=======
 		8DBDDC122BB2787E009B66A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8DBDDC142BB27A02009B66A7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = PunchClock/Config.xcconfig; sourceTree = SOURCE_ROOT; };
->>>>>>> Stashed changes
 		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
 		8DCADAE22A84DE690000AB22 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		8DCADAE42A84DE830000AB22 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		8DCADAE62A84E68D0000AB22 /* URLSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionError.swift; sourceTree = "<group>"; };
 		8DEE32D92AB1C4B90036572E /* DashedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashedLineView.swift; sourceTree = "<group>"; };
-		8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +155,6 @@
 		8D2EAB032A5FD63A00684127 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
-				8DEE32DD2AB1C83E0036572E /* EditTimeViewModel.swift */,
 				8D2EAB062A5FEF6A00684127 /* PunchClockViewModel.swift */,
 				8D2EAB082A60016900684127 /* SettingViewModel.swift */,
 				8D2EAB042A5FD7B400684127 /* RecordListViewModel.swift */,
@@ -342,7 +333,6 @@
 				8D3FCEDF2A8DC41F006799CF /* Url+Extension.swift in Sources */,
 				8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */,
 				8DCADAE52A84DE830000AB22 /* WeatherResponse.swift in Sources */,
-				8DEE32DE2AB1C83E0036572E /* EditTimeViewModel.swift in Sources */,
 				8D0023DE2ABD2BC100DB72D4 /* ExpandTouchAreaButton.swift in Sources */,
 				8D2EAAF72A5D65DC00684127 /* TimeRecord.swift in Sources */,
 				8DCADAE72A84E68D0000AB22 /* URLSessionError.swift in Sources */,

@@ -102,7 +102,7 @@ extension RecordListViewModel {
         
         fetchData(emptyImage: emptyImage, tableView: tableView)
     }
-    
+    // 要emptyImage?
     func saveEditTime(in tableView: UITableView, emptyImage: UIImageView, onFailure: @escaping(String) -> Void) {
         guard let selectedCell = selectedCell(in: tableView) else { return }
         
@@ -114,10 +114,11 @@ extension RecordListViewModel {
         let inText = punchInText.isEmpty ? punchInPlaceholder : punchInText
         let outText = punchOutText.isEmpty ? punchOutPlaceholder : punchOutText
         
-        selectedCell.punchInLabel.text = punchInText.isEmpty ? nil : punchInText
-        selectedCell.punchOutLabel.text = punchOutText.isEmpty ? nil : punchOutText
+        selectedCell.punchInLabel.text = inText
+        selectedCell.punchOutLabel.text = outText
         
         if editTimeVerify(inText: inText, outText: outText) {
+            print(punchInText, punchOutText, punchInPlaceholder, punchOutPlaceholder, inText, outText)
             updateData(inTimeString: punchInText, outTimeString: punchOutText)
             
             selectedCell.toDefaultState()

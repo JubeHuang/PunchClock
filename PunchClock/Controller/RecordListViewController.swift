@@ -126,7 +126,7 @@ class RecordListViewController: UIViewController {
                                onFailure: { text in
             self.displayAlert(title: "Oops", message: text, actionTitle: "OK")
         })
-        tableView(tableview!, heightForRowAt: viewModel.selectedIndexPath!)
+//        tableView(tableview!, heightForRowAt: viewModel.selectedIndexPath!)
     }
     
     @IBAction func cancelEditTime(_ sender: Any) {
