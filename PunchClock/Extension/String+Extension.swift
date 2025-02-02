@@ -6,6 +6,7 @@
 //
 
 import CommonCrypto
+import Foundation.NSDate
 
 extension String {
     var md5: String {
@@ -17,5 +18,12 @@ extension String {
         }
         
         return digest.map { String(format: "%02hhx", $0) }.joined()
+    }
+    
+    func toTime(_ dateFormat: DateFormat) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat.rawValue
+        
+        return dateFormatter.date(from: self)
     }
 }

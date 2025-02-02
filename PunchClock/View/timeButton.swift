@@ -9,6 +9,8 @@ import UIKit
 
 class TimeButton: UIButton {
     
+    let fontSize: CGFloat = 70
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -39,7 +41,7 @@ class TimeButton: UIButton {
         switch style {
         case .work(let state):
             let attributedText = NSMutableAttributedString(string: string, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 70, weight: .medium),
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .medium),
                 NSAttributedString.Key.foregroundColor: state.color
             ])
             let controlState: UIControl.State = state == .notPunchIn ? .normal : .selected
@@ -47,7 +49,7 @@ class TimeButton: UIButton {
             
         case .offWork(let state):
             let attributedText = NSMutableAttributedString(string: string, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 70, weight: .medium),
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: .medium),
                 NSAttributedString.Key.foregroundColor: state.color
             ])
             let controlState: UIControl.State = state == .notPunchOut ? .normal : .selected

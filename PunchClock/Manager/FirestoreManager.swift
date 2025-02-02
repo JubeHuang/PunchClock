@@ -10,19 +10,23 @@ import FirebaseFirestore
 
 class FirestoreManager {
     
+    typealias MonthYear = (month: String, year: String)
+    
     private let db = Firestore.firestore()
     
     private var accountMd5: String? { LogInManager().account?.md5 }
     
-    func fetchData(month: String, completeHandler: @escaping([TimeRecord]) -> Void) {
-        guard let path = getPath(month: month) else { return }
-        
+    private let testMode = "jubeTest"
+    
+    func fetchData(in time: MonthYear, completeHandler: @escaping([TimeRecord]) -> Void) {
+        guard let path = getPath(time: time) else { return }
+        print(path)
         db.collection(path)
             .order(by: "punchIn", descending: false)
             .getDocuments { [weak self] snapshots, error in
                 
                 guard let snapshots else {
-                    self?.errorLog(error, errorTitle: "Read Data Error", successTitle: "Data Read")
+                    self?.log(error, errorTitle: "Read Data Error")
                     return
                 }
                 
@@ -33,46 +37,52 @@ class FirestoreManager {
                         return nil
                     }
                     
-                    return TimeRecord(in: inTimestamp.dateValue(), out: outTimestamp.dateValue())
+                    return TimeRecord(in: inTimestamp.dateValue(), out: outTimestamp.dateValue(), id: document.documentID)
                 }
+                print(timeRecords.count, "fetch from firestore")
                 completeHandler(timeRecords)
+                
+                self?.log(successTitle: "Data Fetched Success")
             }
     }
     
-    func createData(month: String, in: Date? = nil, out: Date? = nil) {
-        guard let path = getPath(month: month) else { return }
+    func createData(in time: MonthYear, in: Date? = nil, out: Date? = nil) {
+        guard let path = getPath(time: time) else { return }
         
         let record = TimeRecord(in: `in`, out: out)
         
         db.collection(path).addDocument(data: record.data) { [weak self] error in
-            guard let self else { return }
-            self.errorLog(error,
+            self?.log(error,
                           errorTitle: "Adding Data Error",
-                          successTitle: "Data Added")
+                          successTitle: "Data Added Success")
         }
     }
     
-    func deleteData(month: String, at index: Int) {
-        getDocumentID(month: month, at: index) { [weak self] path, documentID in
-            guard let self else { return }
-            
-            self.db.collection(path).document(documentID).delete()
+    func deleteData(in time: MonthYear, at index: Int, with id: String) {
+        getDocumentID(time: time, at: index) { [weak self] path, documentID in
+            if id == documentID {
+                self?.db.collection(path).document(documentID).delete()
+                
+                self?.log(successTitle: "Data Deleted Success")
+            } else {
+                self?.log(errorTitle: "Data Delete Error DoumentID Not Match")
+            }
         }
     }
     
-    func updateData(month: String, index: Int, in: Date? = nil, out: Date? = nil) {
+    func updateData(in time: MonthYear, index: Int, in: Date? = nil, out: Date? = nil) {
         let record = TimeRecord(in: `in`, out: out)
         
-        getDocumentID(month: month, at: index) { [weak self] path, documentID in
+        getDocumentID(time: time, at: index) { [weak self] path, documentID in
             guard let self else { return }
             
             self.db.collection(path)
                 .document(documentID)
                 .updateData(record.data) { error in
-                    self.errorLog(error,
-                                  errorTitle: "Update Time Error",
-                                  successTitle: "Time Updated",
-                                  successMsg: "in: \(record.inTimeString), out: \(record.outTimeString)")
+                    self.log(error,
+                             errorTitle: "Update Time Error",
+                             successTitle: "Time Updated",
+                             successMsg: "in: \(record.inTimeString), out: \(record.outTimeString)")
                 }
         }
     }
@@ -86,10 +96,12 @@ class FirestoreManager {
                 
                 guard let snapshots,
                       snapshots.exists,
-                      let quote = try? snapshots.data(as: Quote.self).quote else {
-                    self?.errorLog(error, errorTitle: "Read Quote Error", successTitle: "Quote Read")
+                      let quote = try? snapshots.data(as: QuoteResponse.self).quote else {
+                    self?.log(error,
+                              errorTitle: "Read Quote Error",
+                              successTitle: "Quote Read Success")
                     
-                    completion("今天的語錄尚未抵達，不要著急，因為明天可能也到不了。")
+                    completion(Wording.defaultQuote.text)
                     return
                 }
                 
@@ -97,18 +109,19 @@ class FirestoreManager {
             }
     }
     
-    private func getPath(month: String) -> String? {
-        guard let accountMd5 else {
-            print("====== Unauthorized ======\n Cannot Upload Data.")
-            return nil
-        }
+    private func getPath(time: MonthYear) -> String? {
+//        guard let accountMd5 else {
+//            print("====== Unauthorized ======\nCannot Upload Data.")
+//            return nil
+//        }
         
-        let path = "\(accountMd5)/\(month)/TimeRecords"
+//        let path = "\(accountMd5)/\(month)/TimeRecords"
+        let path = "\(testMode)/\(time.month)\(time.year)/TimeRecords"
         return path
     }
     
-    private func getDocumentID(month: String, at index: Int, completeHandler: @escaping(String, String) -> Void) {
-        guard let path = getPath(month: month) else { return }
+    private func getDocumentID(time: MonthYear, at index: Int, completeHandler: @escaping(String, String) -> Void) {
+        guard let path = getPath(time: time) else { return }
         
         db.collection(path)
             .order(by: "punchIn", descending: false)
@@ -118,18 +131,27 @@ class FirestoreManager {
                 
                 completeHandler(path, snapshots.documents[index].documentID)
                 
-                self.errorLog(error,
-                              errorTitle: "Read Data Error",
-                              successTitle: "Data Read")
+                self.log(error,
+                         errorTitle: "Read Data Error",
+                         successTitle: "Data Read")
             }
     }
     
-    private func errorLog(_ error: Error?, errorTitle: String, successTitle: String, successMsg: String? = nil) {
-        if let error {
+    private func log(_ error: Error? = nil, errorTitle: String? = nil, successTitle: String? = nil, successMsg: String? = nil) {
+        if let error, let errorTitle {
             print("====== \(errorTitle) ======\nError: \(error.localizedDescription)")
             return
         }
-        print("====== \(successTitle) ======\n\(successMsg ?? "")")
+        
+        if let successTitle {
+            print("====== \(successTitle) ======\n\(successMsg ?? "")")
+            return
+        }
+        
+        if let errorTitle {
+            print("====== \(errorTitle) ======")
+            return
+        }
     }
     
 }
