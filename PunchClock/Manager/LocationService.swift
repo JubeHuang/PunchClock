@@ -16,29 +16,29 @@ class LocationService: NSObject {
     
     var updateCityHandler: ((String) -> Void)?
     
-    private let cityTWName: [String: String] = [
-        "TPE": "臺北市",
-        "KHH": "高雄市",
-        "NWT": "新北市",
-        "TNN": "臺南市",
-        "TAO": "桃園市",
-        "TXG": "臺中市",
-        "ILA": "宜蘭縣",
-        "HUA": "花蓮縣",
-        "TTT": "臺東縣",
-        "PEN": "澎湖縣",
-        "KEE": "基隆市",
-        "HSZ": "新竹市",
-        "HSQ": "新竹縣",
-        "CYI": "嘉義市",
-        "CYQ": "嘉義縣",
-        "KIN": "金門縣",
-        "LIE": "連江縣",
-        "MIA": "苗栗縣",
-        "CHA": "彰化縣",
-        "NAN": "南投縣",
-        "YUN": "雲林縣",
-        "PIF": "屏東縣"
+    private let cityTWName: [String] = [
+        "臺北市",
+        "高雄市",
+        "新北市",
+        "臺南市",
+        "桃園市",
+        "臺中市",
+        "宜蘭縣",
+        "花蓮縣",
+        "臺東縣",
+        "澎湖縣",
+        "基隆市",
+        "新竹市",
+        "新竹縣",
+        "嘉義市",
+        "嘉義縣",
+        "金門縣",
+        "連江縣",
+        "苗栗縣",
+        "彰化縣",
+        "南投縣",
+        "雲林縣",
+        "屏東縣"
     ]
     
     private override init() {}
@@ -103,20 +103,21 @@ extension LocationService: CLLocationManagerDelegate {
             
             if let placeMark = placemarks?.first,
                let administrativeArea = placeMark.administrativeArea,
-               let cityName = self.transferToCH(administrativeArea) {
-                completion(cityName)
+               self.isInTaiwan(administrativeArea) {
+                completion(administrativeArea)
             } else {
                 print("No Place Mark")
+                self.weatherService.weatherInfo.city = "不支援區"
             }
         }
     }
     
-    private func transferToCH(_ abbr: String) -> String? {
+    private func isInTaiwan(_ abbr: String) -> Bool {
         print(abbr, "縮寫")
-        guard let cityName = cityTWName[abbr] else {
+        guard cityTWName.contains(abbr) else {
             print("====== Not Correspond With Taiwan City Name ======")
-            return nil
+            return false
         }
-        return cityName
+        return true
     }
 }

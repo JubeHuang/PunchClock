@@ -34,6 +34,7 @@
 		8D3FCEDD2A8DC252006799CF /* WeatherRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3FCEDC2A8DC252006799CF /* WeatherRequest.swift */; };
 		8D3FCEDF2A8DC41F006799CF /* Url+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3FCEDE2A8DC41F006799CF /* Url+Extension.swift */; };
 		8D3FCEE12A8DCD61006799CF /* Wording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3FCEE02A8DCD61006799CF /* Wording.swift */; };
+		8D59A0FC2D4F50B700925FD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D59A0FB2D4F50B700925FD9 /* GoogleService-Info.plist */; };
 		8D5C0B7C2A5D3A6400AC89B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */; };
 		8D5C0B7E2A5D3A6400AC89B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */; };
 		8D5C0B832A5D3A6400AC89B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D5C0B812A5D3A6400AC89B5 /* Main.storyboard */; };
@@ -43,7 +44,6 @@
 		8D5C0B922A5D3ACB00AC89B5 /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5C0B912A5D3ACB00AC89B5 /* LogInManager.swift */; };
 		8D60791B2BC2825100ADFF9C /* PushManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */; };
 		8D60791D2BC289E900ADFF9C /* AutoPunchOutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */; };
-		8DBDDC132BB2787E009B66A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DBDDC122BB2787E009B66A7 /* GoogleService-Info.plist */; };
 		8DBDDC152BB27A02009B66A7 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8DBDDC142BB27A02009B66A7 /* Config.xcconfig */; };
 		8DC013FC2A8393A7005A7245 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */; };
 		8DCADAE32A84DE690000AB22 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCADAE22A84DE690000AB22 /* WeatherService.swift */; };
@@ -78,6 +78,7 @@
 		8D3FCEDC2A8DC252006799CF /* WeatherRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRequest.swift; sourceTree = "<group>"; };
 		8D3FCEDE2A8DC41F006799CF /* Url+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Url+Extension.swift"; sourceTree = "<group>"; };
 		8D3FCEE02A8DCD61006799CF /* Wording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wording.swift; path = PunchClock/Model/Wording.swift; sourceTree = SOURCE_ROOT; };
+		8D59A0FB2D4F50B700925FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D5C0B782A5D3A6400AC89B5 /* PunchClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5C0B7B2A5D3A6400AC89B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D5C0B7D2A5D3A6400AC89B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		8D5C0B932A5D5A4500AC89B5 /* PunchClock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PunchClock.entitlements; sourceTree = "<group>"; };
 		8D60791A2BC2825100ADFF9C /* PushManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManagerDelegate.swift; sourceTree = "<group>"; };
 		8D60791C2BC289E900ADFF9C /* AutoPunchOutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoPunchOutDelegate.swift; sourceTree = "<group>"; };
-		8DBDDC122BB2787E009B66A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8DBDDC142BB27A02009B66A7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = PunchClock/Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		8DC013FB2A8393A7005A7245 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultManager.swift; path = PunchClock/Manager/UserDefaultManager.swift; sourceTree = SOURCE_ROOT; };
 		8DCADAE22A84DE690000AB22 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 				8D5C0B862A5D3A6500AC89B5 /* LaunchScreen.storyboard */,
 				8D5C0B892A5D3A6500AC89B5 /* Info.plist */,
 				8DBDDC142BB27A02009B66A7 /* Config.xcconfig */,
-				8DBDDC122BB2787E009B66A7 /* GoogleService-Info.plist */,
+				8D59A0FB2D4F50B700925FD9 /* GoogleService-Info.plist */,
 			);
 			path = PunchClock;
 			sourceTree = "<group>";
@@ -301,9 +301,9 @@
 			files = (
 				8D5C0B882A5D3A6500AC89B5 /* LaunchScreen.storyboard in Resources */,
 				8DBDDC152BB27A02009B66A7 /* Config.xcconfig in Resources */,
+				8D59A0FC2D4F50B700925FD9 /* GoogleService-Info.plist in Resources */,
 				8D5C0B852A5D3A6500AC89B5 /* Assets.xcassets in Resources */,
 				8D5C0B832A5D3A6400AC89B5 /* Main.storyboard in Resources */,
-				8DBDDC132BB2787E009B66A7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

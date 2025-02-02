@@ -12,7 +12,6 @@ class WeatherService {
     
     private var apiUrl: URL {
         let urlString = (Bundle.main.object(forInfoDictionaryKey: "weatherAPI") as? String)?.replacingOccurrences(of: "\\", with: "")
-        print(urlString!)
         return URL(string: urlString ?? "")!
     }
     private var storeSession: [String: AnyCancellable] = [:]
@@ -34,7 +33,6 @@ class WeatherService {
                 }
                 self.storeSession.removeValue(forKey: "session")
             } receiveValue: { data in
-                print(data)
                 self.parseWeatherData(data)
             }
 
@@ -73,6 +71,7 @@ extension WeatherService {
                 let cityName = location[0].locationName
                 
                 weatherInfo = (city: cityName, iconName: parameterValue)
+                print(weatherInfo)
             }
         } catch {
             print("====== Weather API Decode Error ======\nError: \(error.localizedDescription)")

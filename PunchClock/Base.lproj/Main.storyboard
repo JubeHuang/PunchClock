@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ysi-Zl-ri7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ysi-Zl-ri7">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -333,13 +334,13 @@
                                                     <rect key="frame" x="20" y="11" width="334" height="17"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="每天工作時數（含午休）" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LB6-Wc-gpp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="157.33333333333334" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="142.33333333333334" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" name="Black80"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小時" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyK-t8-Fcf">
-                                                            <rect key="frame" x="165.33333333333337" y="0.0" width="168.66666666666663" height="17"/>
+                                                            <rect key="frame" x="150.33333333333337" y="0.0" width="183.66666666666663" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" name="Black80"/>
                                                             <nil key="highlightedColor"/>
@@ -534,13 +535,13 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="上班" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqJ-z6-Tci">
-                                                            <rect key="frame" x="16" y="88" width="24.666666666666671" height="14.333333333333329"/>
+                                                            <rect key="frame" x="16" y="88" width="24" height="14.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" name="Black70"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="調整時間" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4P-hd-PEP">
-                                                            <rect key="frame" x="16.000000000000004" y="38" width="57.333333333333343" height="17"/>
+                                                            <rect key="frame" x="15.999999999999996" y="38" width="55.666666666666657" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" name="Black80"/>
                                                             <nil key="highlightedColor"/>
@@ -590,7 +591,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="下班" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uo4-Lk-UiE">
-                                                            <rect key="frame" x="341.33333333333331" y="88" width="24.666666666666686" height="14.333333333333329"/>
+                                                            <rect key="frame" x="342" y="88" width="24" height="14.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" name="Black70"/>
                                                             <nil key="highlightedColor"/>
@@ -917,7 +918,10 @@
         <scene sceneID="p2u-GJ-JUy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" hidesBarsOnSwipe="YES" id="dUU-TF-teo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="紀錄" id="hMR-U2-IkD"/>
+                    <tabBarItem key="tabBarItem" title="紀錄" id="hMR-U2-IkD">
+                        <imageReference key="image" image="list.bullet.clipboard" catalog="system" symbolScale="medium"/>
+                        <imageReference key="selectedImage" image="list.bullet.clipboard.fill" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2bA-Uo-kuL">
                         <autoresizingMask key="autoresizingMask"/>
@@ -935,7 +939,10 @@
         <scene sceneID="ZW4-9G-4tI">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ol8-Cj-EDE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首頁" id="3fJ-Xe-AQM"/>
+                    <tabBarItem key="tabBarItem" title="首頁" id="3fJ-Xe-AQM">
+                        <imageReference key="image" image="house" catalog="system" symbolScale="medium"/>
+                        <imageReference key="selectedImage" image="house.fill" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="atU-VK-Ec3">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -963,6 +970,10 @@
         <image name="circleLeftR" width="69" height="52"/>
         <image name="circleRightR" width="69" height="52"/>
         <image name="dateBg" width="48" height="48"/>
+        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="list.bullet.clipboard" catalog="system" width="98" height="128"/>
+        <image name="list.bullet.clipboard.fill" catalog="system" width="98" height="128"/>
         <image name="minus" width="20" height="20"/>
         <image name="nextMonth" width="20" height="20"/>
         <image name="preMonth" width="20" height="20"/>
