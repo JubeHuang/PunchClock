@@ -10,7 +10,6 @@
 		8D0023DE2ABD2BC100DB72D4 /* ExpandTouchAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0023DD2ABD2BC100DB72D4 /* ExpandTouchAreaButton.swift */; };
 		8D26DF702A7BBEE60070723D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DF6F2A7BBEE60070723D /* UIViewController+Extension.swift */; };
 		8D2EAAEF2A5D5CB200684127 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAEE2A5D5CB200684127 /* FirebaseFirestore */; };
-		8D2EAAF12A5D5CB200684127 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2EAAF02A5D5CB200684127 /* FirebaseFirestoreSwift */; };
 		8D2EAAF32A5D5EF700684127 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF22A5D5EF700684127 /* FirestoreManager.swift */; };
 		8D2EAAF52A5D612800684127 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF42A5D612800684127 /* String+Extension.swift */; };
 		8D2EAAF72A5D65DC00684127 /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2EAAF62A5D65DC00684127 /* TimeRecord.swift */; };
@@ -105,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D2EAAEF2A5D5CB200684127 /* FirebaseFirestore in Frameworks */,
-				8D2EAAF12A5D5CB200684127 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +241,7 @@
 			buildPhases = (
 				8D5C0B742A5D3A6400AC89B5 /* Sources */,
 				8D5C0B752A5D3A6400AC89B5 /* Frameworks */,
+				8D7A9F6D2D8B010100A1B2C3 /* Sanitize Embedded Framework Bundle IDs */,
 				8D5C0B762A5D3A6400AC89B5 /* Resources */,
 			);
 			buildRules = (
@@ -252,7 +251,6 @@
 			name = PunchClock;
 			packageProductDependencies = (
 				8D2EAAEE2A5D5CB200684127 /* FirebaseFirestore */,
-				8D2EAAF02A5D5CB200684127 /* FirebaseFirestoreSwift */,
 			);
 			productName = PunchClock;
 			productReference = 8D5C0B782A5D3A6400AC89B5 /* PunchClock.app */;
@@ -308,6 +306,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8D7A9F6D2D8B010100A1B2C3 /* Sanitize Embedded Framework Bundle IDs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sanitize Embedded Framework Bundle IDs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -euo pipefail\n\nFRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}/Frameworks\"\n\nif [ ! -d \"$FRAMEWORKS_DIR\" ]; then\n  exit 0\nfi\n\nfind \"$FRAMEWORKS_DIR\" -maxdepth 1 -type d -name \"*.framework\" | while IFS= read -r framework; do\n  plist=\"$framework/Info.plist\"\n  if [ ! -f \"$plist\" ]; then\n    continue\n  fi\n\n  bundle_id=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleIdentifier\" \"$plist\" 2>/dev/null || true)\n  if [ -z \"$bundle_id\" ]; then\n    continue\n  fi\n\n  sanitized_bundle_id=$(printf '%s' \"$bundle_id\" | sed 's/[^A-Za-z0-9.-]/-/g')\n  if [ \"$bundle_id\" = \"$sanitized_bundle_id\" ]; then\n    continue\n  fi\n\n  echo \"Sanitizing framework bundle identifier: $bundle_id -> $sanitized_bundle_id\"\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleIdentifier $sanitized_bundle_id\" \"$plist\"\n\n  if [ -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ] && [ \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" --preserve-metadata=entitlements,flags \"$framework\"\n  fi\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5C0B742A5D3A6400AC89B5 /* Sources */ = {
@@ -499,16 +518,16 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9A828DBKJV;
+				DEVELOPMENT_TEAM = 7L2DNRNX8Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "使用位置訊息獲取當地天氣資訊";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "使用位置訊息獲得天氣資訊";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -533,16 +552,16 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9A828DBKJV;
+				DEVELOPMENT_TEAM = 7L2DNRNX8Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PunchClock/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "使用位置訊息獲取當地天氣資訊";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "使用位置訊息獲得天氣資訊";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -586,7 +605,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
+				minimumVersion = 12.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -596,11 +615,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8D2EAAED2A5D5CB200684127 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		8D2EAAF02A5D5CB200684127 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8D2EAAED2A5D5CB200684127 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

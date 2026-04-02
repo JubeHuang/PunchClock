@@ -11,10 +11,6 @@ import UIKit
 class PushManager {
     
     static let shared = PushManager()
-    weak var delegate: PushManagerDelegate?
-    
-    var isOffWorkPushOn = false
-    
     private init() {}
     
     private func requestAuthorization(completion: @escaping (Bool) -> Void) {
@@ -45,7 +41,12 @@ class PushManager {
     
     func createPunchOutPushNotification(on suggestTime: Date) {
         let now = Date()
-        if suggestTime < now { return }
+        if suggestTime < now {
+#if DEBUG
+            print("====== PunchOut Push Skipped ======\nSuggest time is in the past: \(suggestTime)")
+#endif
+            return
+        }
         
         let timeDifference = suggestTime.timeIntervalSince(now)
         let timeDifferenceInSeconds = Int(timeDifference)
@@ -54,43 +55,98 @@ class PushManager {
 //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
         let request = UNNotificationRequest(identifier: "PunchOutPush", content: createPushContent(), trigger: trigger)
         
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error {
+                print("====== PunchOut Push Schedule Error ======\nError: \(error.localizedDescription)")
+                return
+            }
+            
+#if DEBUG
+            print("====== PunchOut Push Scheduled ======\nSuggest time: \(suggestTime)\nInterval: \(timeDifferenceInSeconds)s")
+            self.debugPrintPendingPunchOutPush()
+#endif
+        }
     }
     
-    func checkStatus(on suggestTime: Date) {
+    func removePunchOutPushNotification() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["PunchOutPush"])
+#if DEBUG
+        print("====== PunchOut Push Removed ======")
+        debugPrintPendingPunchOutPush()
+#endif
+    }
+    
+    func enablePunchOutPush(on suggestTime: Date?, completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current()
             .getNotificationSettings { [weak self] settings in
                 switch settings.authorizationStatus {
                     
                 case .notDetermined:
                     self?.requestAuthorization { granted in
-                        if granted {
-                            self?.createPunchOutPushNotification(on: suggestTime)
-                        } else {
-                            print("not allowed")
-                            self?.delegate?.pushManagerDelegate(self!, isOffWorkPushOn: false)
+                        DispatchQueue.main.async {
+                            if granted, let suggestTime {
+                                self?.createPunchOutPushNotification(on: suggestTime)
+                            } else if !granted {
+                                print("not allowed")
+                            }
+                            completion(granted)
                         }
+                    }
+                case .authorized, .provisional, .ephemeral:
+                    if let suggestTime {
+                        self?.createPunchOutPushNotification(on: suggestTime)
+                    }
+                    DispatchQueue.main.async {
+                        completion(true)
+                    }
+                case .denied:
+                    DispatchQueue.main.async {
+                        self?.openSettingPage()
+                        completion(false)
                     }
                 default:
                     DispatchQueue.main.async {
-                        self?.openSettingPage()
+                        completion(false)
                     }
                 }
             }
     }
     
-    func syncStatus() {
+    func syncStatus(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current()
-            .getNotificationSettings { [weak self] settings in
+            .getNotificationSettings { settings in
                 switch settings.authorizationStatus {
                     
-                case .denied:
-                    self?.delegate?.pushManagerDelegate(self!, isOffWorkPushOn: false)
-                case .authorized:
-                    self?.delegate?.pushManagerDelegate(self!, isOffWorkPushOn: true)
+                case .authorized, .provisional, .ephemeral:
+                    DispatchQueue.main.async {
+                        completion(true)
+                    }
                 default:
-                    break
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
                 }
             }
     }
+    
+#if DEBUG
+    private func debugPrintPendingPunchOutPush() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let pushRequests = requests.filter { $0.identifier == "PunchOutPush" }
+            
+            if pushRequests.isEmpty {
+                print("====== Pending PunchOut Push ======\nNo pending request")
+                return
+            }
+            
+            for request in pushRequests {
+                if let trigger = request.trigger as? UNTimeIntervalNotificationTrigger {
+                    print("====== Pending PunchOut Push ======\nIdentifier: \(request.identifier)\nTime interval: \(trigger.timeInterval)s\nRepeats: \(trigger.repeats)")
+                } else {
+                    print("====== Pending PunchOut Push ======\nIdentifier: \(request.identifier)\nTrigger: \(String(describing: request.trigger))")
+                }
+            }
+        }
+    }
+#endif
 }

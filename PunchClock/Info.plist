@@ -21,11 +21,7 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-    <key>weatherAPI</key>
-    <string>$(WEATHER_API)</string>
+	<key>weatherAPI</key>
+	<string>$(WEATHER_API)</string>
 </dict>
 </plist>

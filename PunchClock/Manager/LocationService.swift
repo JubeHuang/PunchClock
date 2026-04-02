@@ -13,6 +13,8 @@ class LocationService: NSObject {
     static let shared = LocationService()
     private var manager = CLLocationManager()
     var weatherService = WeatherService()
+    private var isUpdatingLocation = false
+    private var isResolvingCity = false
     
     var updateCityHandler: ((String) -> Void)?
     
@@ -54,18 +56,33 @@ extension LocationService {
         requestAuthorization()
     }
     
+    func refreshLocation() {
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            guard !isUpdatingLocation else { return }
+            isUpdatingLocation = true
+            manager.startUpdatingLocation()
+        case .notDetermined:
+            requestAuthorization()
+        default:
+            break
+        }
+    }
+    
     private func requestAuthorization() {
         manager.requestWhenInUseAuthorization()
-        manager.requestAlwaysAuthorization()
     }
 }
 
 extension LocationService: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        manager.stopUpdatingLocation()
+        guard !isResolvingCity,
+              let location = locations.last else { return }
         
-        guard let location = locations.last else { return }
+        isResolvingCity = true
+        isUpdatingLocation = false
+        manager.stopUpdatingLocation()
         
         updateCityHandler = { city in
             self.weatherService.getWeatherState(city: city)
@@ -82,7 +99,7 @@ extension LocationService: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
             
         case .authorizedWhenInUse, .authorizedAlways:
-            manager.startUpdatingLocation()
+            refreshLocation()
         case .notDetermined:
             requestAuthorization()
         case .restricted, .denied:
@@ -97,6 +114,7 @@ extension LocationService: CLLocationManagerDelegate {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             if let error {
+                self.isResolvingCity = false
                 print("Location Transfer to City Error: \(error.localizedDescription)")
                 return
             }
@@ -104,8 +122,10 @@ extension LocationService: CLLocationManagerDelegate {
             if let placeMark = placemarks?.first,
                let administrativeArea = placeMark.administrativeArea,
                self.isInTaiwan(administrativeArea) {
+                self.isResolvingCity = false
                 completion(administrativeArea)
             } else {
+                self.isResolvingCity = false
                 print("No Place Mark")
                 self.weatherService.weatherInfo.city = "不支援區"
             }
@@ -113,7 +133,9 @@ extension LocationService: CLLocationManagerDelegate {
     }
     
     private func isInTaiwan(_ abbr: String) -> Bool {
+#if DEBUG
         print(abbr, "縮寫")
+#endif
         guard cityTWName.contains(abbr) else {
             print("====== Not Correspond With Taiwan City Name ======")
             return false

@@ -11,11 +11,16 @@ import UIKit.UIViewController
 
 class SettingViewModel {
     
-    private weak var pushManager = PushManager.shared
+    private let pushManager = PushManager.shared
+    private var shouldPersistPushState = true
     
     @Published var workingHours: Double = 9.0
-    
-    @Published var isOffWorkPushOn: Bool = false
+    @Published var isOffWorkPushOn: Bool = false {
+        didSet {
+            guard shouldPersistPushState else { return }
+            UserDefaultManager.saveOffWorkPushState(isOn: isOffWorkPushOn)
+        }
+    }
     @Published var isAutoPunchOutOn: Bool = false {
         didSet {
             UserDefaultManager.saveAutoPunchOutState(isOn: isAutoPunchOutOn)
@@ -31,9 +36,7 @@ class SettingViewModel {
     
     init() {
         self.workingHours = UserDefaultManager.getWorkingHours() >= minHours ? UserDefaultManager.getWorkingHours() : workingHours
-        
-        pushManager?.delegate = self
-        
+        self.isOffWorkPushOn = UserDefaultManager.getOffWorkPushState()
         self.isAutoPunchOutOn = UserDefaultManager.getAutoPunchOutState()
     }
 }
@@ -66,7 +69,8 @@ extension SettingViewModel {
             let timeInterval = workingHours * 60 * 60
             let suggestTime = punchInTime.addingTimeInterval(timeInterval)
 
-            pushManager?.createPunchOutPushNotification(on: suggestTime)
+            pushManager.removePunchOutPushNotification()
+            pushManager.createPunchOutPushNotification(on: suggestTime)
             
             if isAutoPunchOutOn {
                 UserDefaultManager.savePunchInTime(punchInTime)
@@ -74,18 +78,36 @@ extension SettingViewModel {
         }
     }
     
-    func checkPushState() {
-        pushManager?.checkStatus(on: Date())
+    func updatePushState(isOn: Bool) {
+        if isOn {
+            pushManager.enablePunchOutPush(on: currentSuggestTime) { [weak self] isAuthorized in
+                self?.setPushState(UserDefaultManager.getOffWorkPushState() && isAuthorized, persist: false)
+                if isAuthorized {
+                    self?.setPushState(true)
+                }
+            }
+        } else {
+            pushManager.removePunchOutPushNotification()
+            setPushState(false)
+        }
     }
     
     func syncPushStatus() {
-        pushManager?.syncStatus()
+        let savedState = UserDefaultManager.getOffWorkPushState()
+        pushManager.syncStatus { [weak self] isAuthorized in
+            self?.setPushState(savedState && isAuthorized, persist: false)
+        }
     }
-}
-
-extension SettingViewModel: PushManagerDelegate {
     
-    func pushManagerDelegate(_ controller: PushManager, isOffWorkPushOn: Bool) {
-        self.isOffWorkPushOn = isOffWorkPushOn
+    private var currentSuggestTime: Date? {
+        guard let punchInTime = UserDefaultManager.getPunchInTime() else { return nil }
+        let timeInterval = workingHours * 60 * 60
+        return punchInTime.addingTimeInterval(timeInterval)
+    }
+    
+    private func setPushState(_ isOn: Bool, persist: Bool = true) {
+        shouldPersistPushState = persist
+        isOffWorkPushOn = isOn
+        shouldPersistPushState = true
     }
 }

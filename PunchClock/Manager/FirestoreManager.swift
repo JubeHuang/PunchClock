@@ -12,6 +12,8 @@ class FirestoreManager {
     
     typealias MonthYear = (month: String, year: String)
     
+    private static var recordsCache = [String: [TimeRecord]]()
+    
     private let db = Firestore.firestore()
     
     private var accountMd5: String? { LogInManager().account?.md5 }
@@ -19,6 +21,12 @@ class FirestoreManager {
     private let testMode = "jubeTest"
     
     func fetchData(in time: MonthYear, completeHandler: @escaping([TimeRecord]) -> Void) {
+        let cacheKey = cacheKey(for: time)
+        if let cachedRecords = Self.recordsCache[cacheKey] {
+            completeHandler(cachedRecords)
+            return
+        }
+        
         guard let path = getPath(time: time) else { return }
         print(path)
         db.collection(path)
@@ -39,6 +47,7 @@ class FirestoreManager {
                     
                     return TimeRecord(in: inTimestamp.dateValue(), out: outTimestamp.dateValue(), id: document.documentID)
                 }
+                Self.recordsCache[cacheKey] = timeRecords
                 print(timeRecords.count, "fetch from firestore")
                 completeHandler(timeRecords)
                 
@@ -49,9 +58,12 @@ class FirestoreManager {
     func createData(in time: MonthYear, in: Date? = nil, out: Date? = nil) {
         guard let path = getPath(time: time) else { return }
         
-        let record = TimeRecord(in: `in`, out: out)
+        let document = db.collection(path).document()
+        let record = TimeRecord(in: `in`, out: out, id: document.documentID)
         
-        db.collection(path).addDocument(data: record.data) { [weak self] error in
+        upsertCachedRecord(record, in: time)
+        
+        document.setData(record.data) { [weak self] error in
             self?.log(error,
                           errorTitle: "Adding Data Error",
                           successTitle: "Data Added Success")
@@ -59,6 +71,8 @@ class FirestoreManager {
     }
     
     func deleteData(in time: MonthYear, at index: Int, with id: String) {
+        removeCachedRecord(in: time, with: id)
+        
         getDocumentID(time: time, at: index) { [weak self] path, documentID in
             if id == documentID {
                 self?.db.collection(path).document(documentID).delete()
@@ -71,13 +85,23 @@ class FirestoreManager {
     }
     
     func updateData(in time: MonthYear, index: Int, in: Date? = nil, out: Date? = nil) {
-        let record = TimeRecord(in: `in`, out: out)
+        guard let cachedRecord = cachedRecords(in: time).safeElement(at: index),
+              let documentID = cachedRecord.documentID else {
+            return
+        }
         
-        getDocumentID(time: time, at: index) { [weak self] path, documentID in
+        let record = TimeRecord(in: `in`, out: out, id: documentID)
+        upsertCachedRecord(record, in: time)
+        
+        getDocumentID(time: time, at: index) { [weak self] path, fetchedDocumentID in
             guard let self else { return }
+            guard documentID == fetchedDocumentID else {
+                self.log(errorTitle: "Update Time Error DocumentID Not Match")
+                return
+            }
             
             self.db.collection(path)
-                .document(documentID)
+                .document(fetchedDocumentID)
                 .updateData(record.data) { error in
                     self.log(error,
                              errorTitle: "Update Time Error",
@@ -85,6 +109,10 @@ class FirestoreManager {
                              successMsg: "in: \(record.inTimeString), out: \(record.outTimeString)")
                 }
         }
+    }
+    
+    func cachedRecords(in time: MonthYear) -> [TimeRecord] {
+        Self.recordsCache[cacheKey(for: time)] ?? []
     }
     
     func getQuote(completion: @escaping (String) -> Void) {
@@ -118,6 +146,34 @@ class FirestoreManager {
 //        let path = "\(accountMd5)/\(month)/TimeRecords"
         let path = "\(testMode)/\(time.month)\(time.year)/TimeRecords"
         return path
+    }
+    
+    private func cacheKey(for time: MonthYear) -> String {
+        "\(time.month)-\(time.year)"
+    }
+    
+    private func upsertCachedRecord(_ record: TimeRecord, in time: MonthYear) {
+        let key = cacheKey(for: time)
+        var records = Self.recordsCache[key] ?? []
+        
+        if let recordID = record.documentID,
+           let index = records.firstIndex(where: { $0.documentID == recordID }) {
+            records[index] = record
+        } else {
+            records.append(record)
+        }
+        
+        Self.recordsCache[key] = records.sorted {
+            ($0.inTime ?? .distantPast) < ($1.inTime ?? .distantPast)
+        }
+    }
+    
+    private func removeCachedRecord(in time: MonthYear, with documentID: String) {
+        let key = cacheKey(for: time)
+        guard var records = Self.recordsCache[key] else { return }
+        
+        records.removeAll { $0.documentID == documentID }
+        Self.recordsCache[key] = records
     }
     
     private func getDocumentID(time: MonthYear, at index: Int, completeHandler: @escaping(String, String) -> Void) {
@@ -154,4 +210,10 @@ class FirestoreManager {
         }
     }
     
+}
+
+private extension Array {
+    func safeElement(at index: Int) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
 }

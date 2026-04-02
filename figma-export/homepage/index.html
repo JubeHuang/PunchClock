@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PunchClock Home</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --white-70: #c6d7e8;
+      --white-80: #eef7ff;
+      --black-70: #a1adb8;
+      --black-80: #737a80;
+      --primary-blue: #5fbff5;
+      --dark-blue: #002b44;
+      --sheet-top: 504px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.45), transparent 28%),
+        linear-gradient(180deg, #90d5fb 0%, #a6daf8 26%, #d1e6f5 54%, #f5f7fa 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .artboard {
+      position: relative;
+      width: 414px;
+      height: 896px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, #7cccf8 0%, #a3d9f8 24%, #d2e7f6 52%, #f6f7f9 100%);
+      border-radius: 32px;
+      box-shadow: 0 24px 80px rgba(32, 63, 91, 0.18);
+    }
+
+    .circle-a,
+    .circle-b {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .circle-a {
+      top: 0;
+      right: 0;
+      width: 144px;
+      height: 173px;
+      object-fit: cover;
+    }
+
+    .circle-b {
+      left: 0;
+      top: 320px;
+      width: 131px;
+      height: 244px;
+      object-fit: cover;
+    }
+
+    .sheet-shape {
+      position: absolute;
+      inset: var(--sheet-top) 0 0;
+      background: var(--white-80);
+      border-top-left-radius: 46% 34px;
+      border-top-right-radius: 46% 34px;
+    }
+
+    .sheet-shape::before {
+      content: "";
+      position: absolute;
+      left: -6%;
+      right: -6%;
+      top: -42px;
+      height: 76px;
+      background: var(--white-80);
+      border-radius: 0 0 50% 50%;
+      transform: scaleX(1.05);
+    }
+
+    .work-summary {
+      position: absolute;
+      top: 159px;
+      left: 48px;
+      right: 20px;
+      display: grid;
+      grid-template-columns: 16px 1fr 40px;
+      align-items: center;
+      gap: 32px;
+      color: var(--black-70);
+    }
+
+    .timeline {
+      height: 184px;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      grid-template-rows: 76px 16px 76px;
+    }
+
+    .timeline-line {
+      width: 1px;
+      height: 76px;
+      background: var(--white-70);
+    }
+
+    .timeline-dot {
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .work-text {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .settings-link {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+
+    .settings-link img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .scroll-sheet {
+      position: absolute;
+      inset: var(--sheet-top) 0 0;
+      padding: 40px 16px 24px;
+    }
+
+    .card-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .weather-date {
+      display: grid;
+      grid-template-columns: 14px 62px 1fr 14px;
+      gap: 10px;
+      align-items: start;
+      min-height: 80px;
+    }
+
+    .weather {
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+    }
+
+    .icon-shell {
+      width: 62px;
+      height: 62px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(161, 173, 184, 0.3);
+      display: grid;
+      place-items: center;
+    }
+
+    .icon-shell img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+    }
+
+    .city {
+      color: var(--white-70);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .date-wrap {
+      display: grid;
+      justify-items: end;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    .date-text {
+      color: var(--black-80);
+      font-size: 24px;
+      line-height: 1.15;
+      font-weight: 400;
+    }
+
+    .weekday-text {
+      color: var(--dark-blue);
+      font-size: 30px;
+      line-height: 1.15;
+      font-weight: 400;
+    }
+
+    .quote {
+      position: relative;
+      min-height: 70px;
+      padding: 8px 20px;
+      text-align: center;
+      color: var(--black-70);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .quote .sign-a,
+    .quote .sign-b {
+      position: absolute;
+      width: 27px;
+      height: 21px;
+      object-fit: contain;
+    }
+
+    .quote .sign-a {
+      top: 0;
+      left: 0;
+    }
+
+    .quote .sign-b {
+      right: 0;
+      bottom: 0;
+    }
+
+    .clock-actions {
+      position: absolute;
+      left: 30px;
+      right: 40px;
+      top: 34px;
+      display: grid;
+      gap: 128px;
+    }
+
+    .time-block {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      column-gap: 10px;
+      align-items: center;
+    }
+
+    .time-block img {
+      width: 60px;
+      height: 64px;
+      object-fit: contain;
+      justify-self: start;
+    }
+
+    .time-block .time {
+      font-size: 70px;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: -2.8px;
+      white-space: nowrap;
+    }
+
+    .time-block.primary .time {
+      color: var(--primary-blue);
+    }
+
+    .time-block.secondary .time,
+    .time-block.secondary .hint {
+      color: var(--black-70);
+    }
+
+    .hint-row {
+      padding-left: 96px;
+      display: grid;
+      gap: 128px;
+      margin-top: 6px;
+    }
+
+    .hint {
+      font-size: 16px;
+      line-height: 1.2;
+      color: var(--black-70);
+    }
+    .hint.secondary {
+      max-width: 238px;
+    }
+  </style>
+</head>
+<body>
+  <main class="artboard">
+    <img class="circle-a" src="../../PunchClock/Assets.xcassets/circleA.imageset/circleA@3x.png" alt="">
+    <img class="circle-b" src="../../PunchClock/Assets.xcassets/circleB.imageset/circleB@3x.png" alt="">
+    <div class="sheet-shape"></div>
+
+    <section class="clock-actions" aria-label="Punch clock controls">
+      <div>
+        <div class="time-block primary">
+          <img src="../../PunchClock/Assets.xcassets/icon/checkNo.imageset/checkNo@3x.png" alt="">
+          <div class="time">09:30</div>
+        </div>
+      </div>
+      <div>
+        <div class="time-block secondary">
+          <img src="../../PunchClock/Assets.xcassets/icon/notCheckOut.imageset/notCheckOut@3x.png" alt="">
+          <div class="time">18:30</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hint-row">
+      <div class="hint">雙擊打卡開啟今天的工作</div>
+      <div class="hint secondary">不加班的Me要 18:30 下班</div>
+    </div>
+
+    <section class="work-summary" aria-label="Working hour summary">
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="work-text">努力工作 9 小時</div>
+      <button class="settings-link" aria-label="Open settings">
+        <img src="../../PunchClock/Assets.xcassets/icon/arrow.imageset/arrow@3x.png" alt="">
+      </button>
+    </section>
+
+    <section class="scroll-sheet" aria-label="Info panel">
+      <div class="card-stack">
+        <div class="weather-date">
+          <div></div>
+          <div class="weather">
+            <div class="icon-shell">
+              <img src="../../PunchClock/Assets.xcassets/weather/4.imageset/04@3x.png" alt="">
+            </div>
+            <div class="city">台北市</div>
+          </div>
+          <div class="date-wrap">
+            <div class="date-text">Mar/19/2026</div>
+            <div class="weekday-text">Thursday</div>
+          </div>
+          <div></div>
+        </div>
+
+        <div class="quote">
+          <img class="sign-a" src="../../PunchClock/Assets.xcassets/icon/signA.imageset/signA@3x.png" alt="">
+          對於今天解決不了的事情，不要著急，因為明天也解決不了。
+          <img class="sign-b" src="../../PunchClock/Assets.xcassets/icon/signB.imageset/signB@3x.png" alt="">
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

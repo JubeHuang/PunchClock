@@ -25,13 +25,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         renderUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        bind()
+        refreshView()
         viewModel.checkAutoPunchOut()
         
         self.navigationController?.navigationBar.isHidden = true
@@ -41,12 +42,6 @@ class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         self.navigationController?.navigationBar.isHidden = false
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        cancellable.removeAll()
     }
     
     func bind() {
@@ -88,6 +83,10 @@ class MainViewController: UIViewController {
                 }, delayFactor: 0.3)
             }.store(in: &cancellable)
         
+        refreshView()
+    }
+    
+    private func refreshView() {
         workingHourLabel.text = viewModel.workingHourStr
         viewModel.getSuggestTimeStr()
     }

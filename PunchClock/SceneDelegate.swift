@@ -39,7 +39,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        PushManager.shared.syncStatus()
+        PushManager.shared.syncStatus { _ in }
+        LocationService.shared.refreshLocation()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -50,4 +51,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

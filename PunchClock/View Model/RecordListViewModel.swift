@@ -39,7 +39,6 @@ class RecordListViewModel {
     
     init() {
         self.records = [TimeRecord]()
-        firestoreManager.fetchData(in: (monthString, yearString)) { self.records = $0 }
     }
 }
 
@@ -66,21 +65,25 @@ extension RecordListViewModel {
     
     func getWorkingHourStr(at index: Int) -> String {
         let record = records(at: index)
-        let punchInTime = record.inTimeString
-        let punchOutTime = record.outTimeString
+        guard let inTime = record.inTime,
+              let outTime = record.outTime,
+              outTime >= inTime else { return "" }
         
-        if punchInTime.count == 5, punchOutTime.count == 5 {
-            if let inHour = Int(punchInTime.prefix(2)),
-               let outHour = Int(punchOutTime.prefix(2)),
-               let inMinute = Int(punchInTime.suffix(2)),
-               let outMinute = Int(punchOutTime.suffix(2)) {
-                let hours = outHour - inHour
-                let minutes = outMinute - inMinute
-                
-                return "\(hours)小時\(minutes)分"
-            }
+        let durationInMinutes = Int(outTime.timeIntervalSince(inTime) / 60)
+        let hours = durationInMinutes / 60
+        let minutes = durationInMinutes % 60
+        
+        if hours == 0, minutes == 0 {
+            return "0分"
         }
-        return ""
+        if hours == 0 {
+            return "\(minutes)分"
+        }
+        if minutes == 0 {
+            return "\(hours)小時"
+        }
+        
+        return "\(hours)小時\(minutes)分"
     }
     
     func nextMonth(emptyImage: UIImageView, tableView: UITableView) {
@@ -177,6 +180,12 @@ extension RecordListViewModel {
         print(records.count, "records \(monthString)", hasRecords)
     }
     
+    func reloadCachedData(emptyImage: UIImageView, tableView: UITableView) {
+        records = firestoreManager.cachedRecords(in: (monthString, yearString))
+        mayShowEmptyState(image: emptyImage, tableView: tableView)
+        tableView.reloadData()
+    }
+    
     private func mayShowEmptyState(image: UIImageView, tableView: UITableView) {
         image.isHidden = hasRecords
         tableView.isHidden = !hasRecords
@@ -220,6 +229,10 @@ extension RecordListViewModel {
         if let hour = Int(outTimeComponent![0]),
            let min = Int(outTimeComponent![1]) {
             outTime = calandar.date(bySettingHour: hour, minute: min, second: 0, of: outTime!) ?? outTime
+        }
+        
+        if let documentID = records(at: selectedIndexPath!.row).documentID {
+            records[selectedIndexPath!.row] = TimeRecord(in: inTime, out: outTime, id: documentID)
         }
         
         firestoreManager.updateData(in: (monthString, yearString), index: selectedIndexPath!.row, in: inTime, out: outTime)

@@ -17,21 +17,16 @@ class PunchClockViewModel {
     private var cancellable = Set<AnyCancellable>()
     
     weak var weatherService = LocationService.shared.weatherService
-    private weak var pushManager = PushManager.shared
-    
-    lazy var isOffWorkPushOn = false {
-        didSet {
-            if isOffWorkPushOn {
-                createPush()
-            }
-        }
-    }
+    private let pushManager = PushManager.shared
     
     @Published var isPunchIn: Bool = false {
         didSet {
             if isPunchIn, punchInTime == nil {
                 punchInTime = Date()
                 UserDefaultManager.savePunchInTime(punchInTime!)
+                if UserDefaultManager.getOffWorkPushState() {
+                    createPush()
+                }
                 
                 getSuggestTimeStr()
             } else if !isPunchIn {
@@ -49,18 +44,26 @@ class PunchClockViewModel {
         didSet {
             switch isPunchOut {
             case true:
-                if isAutoPunchOut(), let savedOutTime = UserDefaultManager.getPunchOutTime() {
+                let savedPunchInTime = punchInTime
+                let shouldAutoPunchOut = isAutoPunchOut()
+                
+                if shouldAutoPunchOut,
+                   let savedOutTime = UserDefaultManager.getPunchOutTime() {
                     punchOutTime = savedOutTime
-                    resetData()
                 } else {
                     punchOutTime = Date()
                 }
                 
                 UserDefaultManager.removeAllPunchTime()
                 
-                guard let month = punchInTime?.toString(dateFormat: .monthEn),
-                      let year = punchInTime?.toString(dateFormat: .year) else { return }
-                firestoreManager.createData(in: (month, year), in: punchInTime, out: punchOutTime)
+                guard let savedPunchInTime else { return }
+                let month = savedPunchInTime.toString(dateFormat: .monthEn)
+                let year = savedPunchInTime.toString(dateFormat: .year)
+                firestoreManager.createData(in: (month, year), in: savedPunchInTime, out: punchOutTime)
+                
+                if shouldAutoPunchOut {
+                    resetData()
+                }
             case false:
                 punchOutTime = nil
             }
@@ -118,8 +121,6 @@ class PunchClockViewModel {
         getCurrentTime()
         getPunchInStateAndTime()
         loadQuote()
-        
-        pushManager?.delegate = self
     }
     
     deinit {
@@ -138,7 +139,8 @@ extension PunchClockViewModel {
     
     private func createPush() {
         guard let suggestTime else { return }
-        pushManager?.createPunchOutPushNotification(on: suggestTime)
+        pushManager.removePunchOutPushNotification()
+        pushManager.createPunchOutPushNotification(on: suggestTime)
     }
     
     private func getSuggestTime(from punchIn: Date) -> Date {
@@ -247,11 +249,5 @@ extension PunchClockViewModel {
         let vibrateFeedback = UIImpactFeedbackGenerator(style: .medium)
         vibrateFeedback.prepare()
         vibrateFeedback.impactOccurred(intensity: 3)
-    }
-}
-
-extension PunchClockViewModel: PushManagerDelegate {
-    func pushManagerDelegate(_ manager: PushManager, isOffWorkPushOn: Bool) {
-        self.isOffWorkPushOn = isOffWorkPushOn
     }
 }

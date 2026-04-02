@@ -13,6 +13,7 @@ class UserDefaultManager {
     private static let punchOutKey = UserDefaultKey.punchOutDate.rawValue
     private static let workingHoursKey = UserDefaultKey.workingHours.rawValue
     private static let autoPunchOutKey = UserDefaultKey.autoPunchOutState.rawValue
+    private static let offWorkPushKey = UserDefaultKey.offWorkPushState.rawValue
     
     static func getPunchInTime() -> Date? {
         UserDefaults.standard.object(forKey: punchInKey) as? Date
@@ -33,6 +34,10 @@ class UserDefaultManager {
     
     static func getAutoPunchOutState() -> Bool {
         UserDefaults.standard.bool(forKey: autoPunchOutKey)
+    }
+    
+    static func getOffWorkPushState() -> Bool {
+        UserDefaults.standard.bool(forKey: offWorkPushKey)
     }
     
     static func savePunchOutTime(_ date: Date) {
@@ -56,6 +61,10 @@ class UserDefaultManager {
     static func saveAutoPunchOutState(isOn: Bool) {
         UserDefaults.standard.set(isOn, forKey: autoPunchOutKey)
     }
+    
+    static func saveOffWorkPushState(isOn: Bool) {
+        UserDefaults.standard.set(isOn, forKey: offWorkPushKey)
+    }
 }
 
 enum UserDefaultKey: String {
@@ -64,4 +73,5 @@ enum UserDefaultKey: String {
     case punchOutDate
     case workingHours
     case autoPunchOutState
+    case offWorkPushState
 }

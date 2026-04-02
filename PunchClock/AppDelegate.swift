@@ -10,6 +10,7 @@ import AuthenticationServices
 
 import Firebase
 import FirebaseFirestore
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LogInManager().checkAppleSignInState()
         
         FirebaseApp.configure()
+        UNUserNotificationCenter.current().delegate = self
         
         LocationService.shared.loadLocation()
         
@@ -42,3 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
+    }
+}

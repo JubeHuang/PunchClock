@@ -45,19 +45,18 @@ class RecordListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        bind()
         settingView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.fetchData(emptyImage: emptyImage, tableView: recordListTableView)
+        bind()
+        viewModel.reloadCachedData(emptyImage: emptyImage, tableView: recordListTableView)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
         cancellable.removeAll()
     }
@@ -69,6 +68,8 @@ class RecordListViewController: UIViewController {
         inTimePicker.dataSource = self
         outTimePicker.delegate = self
         outTimePicker.dataSource = self
+        
+        viewModel.fetchData(emptyImage: emptyImage, tableView: recordListTableView)
     }
     
     @objc func inPickerDone() {

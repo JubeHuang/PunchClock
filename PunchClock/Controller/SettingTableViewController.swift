@@ -73,9 +73,7 @@ class SettingTableViewController: UITableViewController {
     }
     
     @IBAction func punchOutPush(_ sender: UISwitch) {
-        viewModel.isOffWorkPushOn = sender.isOn
-        
-        viewModel.checkPushState()
+        viewModel.updatePushState(isOn: sender.isOn)
     }
     
 }
